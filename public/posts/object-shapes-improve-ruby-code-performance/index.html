@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Object shapes - how this under-the-hood change in Ruby 3.2.0 will improve your code performance | Poddar, Ayush</title>
+<meta name="keywords" content="ruby, object shapes, inline cache, performance optimization" />
+<meta name="description" content="Discover how object shapes in Ruby 3.2.0 will enhance performance. Learn about the underlying implementation and its practical implications for boosting Ruby applications&#39; speed and efficiency.">
+<meta name="author" content="Ayush Poddar">
+<link rel="canonical" href="https://d265ea6a.my-personal-site-37w.pages.dev/posts/object-shapes-improve-ruby-code-performance/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.7bfe087ae72df31787ec7a1360dd05ee246a179b51cf7a30a904b39d7f813b69.css" integrity="sha256-e/4Ieuct8xeH7HoTYN0F7iRqF5tRz3owqQSznX&#43;BO2k=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js" integrity="sha256-uVus3DnjejMqn4g7Hni&#43;Srwf3KK8HyZB9V4809q9TWE="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://d265ea6a.my-personal-site-37w.pages.dev/images/profile.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://d265ea6a.my-personal-site-37w.pages.dev/images/profile.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://d265ea6a.my-personal-site-37w.pages.dev/images/profile.png">
+<link rel="apple-touch-icon" href="https://d265ea6a.my-personal-site-37w.pages.dev/images/profile.png">
+<link rel="mask-icon" href="https://d265ea6a.my-personal-site-37w.pages.dev/images/profile.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://d265ea6a.my-personal-site-37w.pages.dev/" accesskey="h" title="Poddar, Ayush (Alt + H)">Poddar, Ayush</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home"><span>Home</span></a>
+            </li>
+            <li>
+                <a href="https://d265ea6a.my-personal-site-37w.pages.dev/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://d265ea6a.my-personal-site-37w.pages.dev/">Home</a>&nbsp;»&nbsp;<a href="https://d265ea6a.my-personal-site-37w.pages.dev/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Object shapes - how this under-the-hood change in Ruby 3.2.0 will improve your code performance
+    </h1>
+    <div class="post-description">
+      Discover how object shapes in Ruby 3.2.0 will enhance performance. Learn about the underlying implementation and its practical implications for boosting Ruby applications&#39; speed and efficiency.
+    </div>
+    <div class="post-meta"><span title='2023-03-30 18:00:38 +0530 IST'>March 30, 2023</span>&nbsp;·&nbsp;12 min&nbsp;·&nbsp;Ayush Poddar</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#pre-ruby-320" aria-label="Pre-ruby 3.2.0">Pre-ruby 3.2.0</a><ul>
+                        
+                <li>
+                    <a href="#how-does-ruby-store-an-objects-instance-variables" aria-label="How does Ruby store an object’s instance variables?">How does Ruby store an object’s instance variables?</a></li>
+                <li>
+                    <a href="#hash-lookups-are-slow-inline-caches-to-the-rescue" aria-label="Hash lookups are slow; Inline caches to the rescue">Hash lookups are slow; Inline caches to the rescue</a></li>
+                <li>
+                    <a href="#the-problem---dependency-of-object-attributes-to-class" aria-label="The problem - Dependency of object attributes to class">The problem - Dependency of object attributes to class</a></li></ul>
+                </li>
+                <li>
+                    <a href="#object-shapes" aria-label="Object Shapes">Object Shapes</a><ul>
+                        
+                <li>
+                    <a href="#implementation-of-object-shapes" aria-label="Implementation of object shapes">Implementation of object shapes</a></li>
+                <li>
+                    <a href="#how-does-the-current-shape-of-an-object-provide-the-index-of-all-instance-variables-of-the-object" aria-label="How does the current shape of an object provide the index of all instance variables of the object?">How does the current shape of an object provide the index of all instance variables of the object?</a></li>
+                <li>
+                    <a href="#inline-caching-using-object-shapes" aria-label="Inline caching using object shapes">Inline caching using object shapes</a></li></ul>
+                </li>
+                <li>
+                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a></li>
+                <li>
+                    <a href="#authors-of-this-implementation" aria-label="Authors of this implementation">Authors of this implementation</a></li>
+                <li>
+                    <a href="#references" aria-label="References">References</a></li>
+                <li>
+                    <a href="#footnotes" aria-label="Footnotes">Footnotes</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content">
+  <p>There is an almost non-descript bullet point in the Ruby 3.2.0 changelog which states:</p>
+<blockquote>
+<p>YJIT is now optimized to take advantage of object shapes. [<a href="https://bugs.ruby-lang.org/issues/18776">Feature #18776</a>]</p>
+</blockquote>
+<p>Before discussing what object shapes are and how they boost your code performance, let’s look at how things have been before this release. This will help you understand the problem it is trying to solve.</p>
+<h2 id="pre-ruby-320">Pre-ruby 3.2.0</h2>
+<h3 id="how-does-ruby-store-an-objects-instance-variables">How does Ruby store an object’s instance variables?</h3>
+<p>Every plain ruby object is assigned 40 bytes of space(on a 64-bit machine). The in-memory layout of an embedded ruby object looks like:</p>
+<table>
+<thead>
+<tr>
+<th>Byte index</th>
+<th>Value</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Flags (64-bit bitmap)</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Pointer to class</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>First instance variable (IV)</td>
+<td>IV array → Index: 0</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Second instance variable (IV)</td>
+<td>IV array → Index: 1</td>
+</tr>
+<tr>
+<td>32</td>
+<td>Third instance variable (IV)</td>
+<td>IV array → Index: 2</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see, the values of instance variables (IVs)<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> of an object are stored inside the object’s memory space itself<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. The bytes where the instance variables are stored collectively form an array called the <strong>instance variable array, or IV array.</strong></p>
+<p>As an example, consider the following class:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Person</span>
+</span></span><span class="line"><span class="cl">  <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:age</span><span class="p">,</span> <span class="ss">:country</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">demo_guy</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span>
+</span></span></code></pre></div><p>This is how the memory layout of <code>demo_guy</code> will look like:</p>
+<table>
+<thead>
+<tr>
+<th>Byte index</th>
+<th>Value</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Flags (64-bit bitmap)</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Pointer to class (<code>Person</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>Qundef (undefined)</td>
+<td>IV array → Index: 0</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Qundef (undefined)</td>
+<td>IV array → Index: 1</td>
+</tr>
+<tr>
+<td>32</td>
+<td>Qundef (undefind)</td>
+<td>IV array → Index: 2</td>
+</tr>
+</tbody>
+</table>
+<p>The array indices map to the instance variable names using a hash table called <strong>IV index table.</strong> This table is specific to the class (<code>Person</code> in this case) of the object, not the object.</p>
+<p>So, when setting the <code>name</code> attribute (<code>@name</code>) on this object, the interpreter first queries the IV index table to get the IV array index for <code>@name</code>. If the index is not present, the next available index is assigned to <code>@name</code>. After running this command,</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">demo_guy</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Alice&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="no">OR</span>
+</span></span><span class="line"><span class="cl"><span class="n">demo_guy</span><span class="o">.</span><span class="n">instance_variable_set</span><span class="p">(</span><span class="ss">:@name</span><span class="p">,</span> <span class="s2">&#34;Alice&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>The IV index table looks like:</p>
+<table>
+<thead>
+<tr>
+<th>Instance variable name</th>
+<th>Index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@name</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>And the IV array looks like this:</p>
+<table>
+<thead>
+<tr>
+<th>IV array index</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>&ldquo;Alice&rdquo;</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Qundef (undefined)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Qundef (undefind)</td>
+</tr>
+</tbody>
+</table>
+<p>This is how the IV index table and IV array change after setting of each instance variable:</p>
+<p><img loading="lazy" src="https://i.imgur.com/5PUGdbA.jpg" alt="Transition of IV index table and IV array as instance variables get set"  />
+</p>
+<p>As you can guess, all objects of a class share the same IV index table. A new <code>Person</code> object can use the index values already created in the IV index table.</p>
+<h3 id="hash-lookups-are-slow-inline-caches-to-the-rescue">Hash lookups are slow; Inline caches to the rescue</h3>
+<p>This hash lookup is considered slow when instance variables are constantly set and read, which is common in a typical Ruby codebase. So, the ruby interpreter (YARV) creates inline caches<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> to store the array indices within the getter and setter byte code.</p>
+<p>For example, after setting <code>@name</code> the array index <code>0</code> is cached inline within the setter method. The pseudo-code for this would be:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">name</span><span class="o">=</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">cached_index</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="ss">:@name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">iv_array</span><span class="o">[</span><span class="n">cached_index</span><span class="o">]</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></div><p>When the index is fetched for the first time, the inline cache is empty. It references the IV index table to get the index and update the inline cache.</p>
+<p>This inline cache uses the class of the object as its cache key<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>. This ensures that the cache is used only if the class of the object and the class in the cache key match. The above code will be updated into this (pseudo-code):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">name</span><span class="o">=</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">cache</span><span class="o">.</span><span class="n">key</span> <span class="c1"># cache.key = Person</span>
+</span></span><span class="line"><span class="cl">    <span class="n">index</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="ss">:@name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="n">index</span> <span class="o">=</span> <span class="n">lookup_index_table</span><span class="p">(</span><span class="ss">:@name</span><span class="p">)</span> <span class="c1"># Lookup the index from IV index table</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Setting the inline cache with the object&#39;s class as cache key</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cache</span><span class="o">[</span><span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="o">]</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">index</span><span class="p">:</span> <span class="n">index</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="k">end</span>
+</span></span><span class="line"><span class="cl">  <span class="n">iv_array</span><span class="o">[</span><span class="n">cached_index</span><span class="o">]</span> <span class="o">=</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></div><h3 id="the-problem---dependency-of-object-attributes-to-class">The problem - Dependency of object attributes to class</h3>
+<p>Consider a new class inheriting from <code>Person</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Child</span> <span class="o">&lt;</span> <span class="no">Person</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">kid</span> <span class="o">=</span> <span class="no">Child</span><span class="o">.</span><span class="n">new</span>
+</span></span><span class="line"><span class="cl"><span class="n">kid</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Bunty&#34;</span>
+</span></span></code></pre></div><p>The interpreter won’t be able to use the inline cache since the class of the object <code>kid</code> is not <code>Person</code>. It will reference the IV index table of <code>Child</code> class to get the IV index for <code>@name</code> and update the inline cache key to <code>Child</code>.</p>
+<p>Next time if <code>@name</code> is referenced on an instance of <code>Person</code>, the interpreter will again miss the cache since the cache key will now be <code>Child</code>. It will again do a lookup on the <code>Person</code> IV index table and update the inline cache key to <code>Person</code>.</p>
+<p>You can appreciate the problem even more by reasoning that the code below will never be able use make use of the inline cache<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="kp">loop</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="n">demo_guy</span><span class="o">.</span><span class="n">name</span>
+</span></span><span class="line"><span class="cl">  <span class="n">kid</span><span class="o">.</span><span class="n">name</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></div><p>A typical ruby codebase is full of class inheritances and instances referring to methods defined in their parent classes. The scale of the problem can be easily appreciated.</p>
+<h2 id="object-shapes">Object Shapes</h2>
+<p>As the authors of this feature have repeatedly pointed out in their presentations, they are not the regular geometrical shapes. They are an abstract concept to describe an object. They have a tree data structure.</p>
+<p>The shape of an object is defined by its properties (attributes).</p>
+<blockquote>
+<p>ℹ️ <strong>Info</strong></p>
+<p><em>To limit the scope of this post, we will assume that only instance variables are responsible in defining an object&rsquo;s attributes.</em></p>
+</blockquote>
+<h3 id="implementation-of-object-shapes">Implementation of object shapes</h3>
+<p>There is one global shape tree. The shapes form the nodes of the tree and the instance variables which create those shapes form the edges. There is one root shape which represents a basic object with default properties only.</p>
+<p>Using the classes we defined above, consider a new instance of <code>Person</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">shapy_person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span>
+</span></span></code></pre></div><p><code>shapy_person</code> does not have any properties explicitly set. So, it will have the root shape. For the sake of simplicity, the <code>shape_id</code> of the root shape will be considered to be <code>0</code>. Each time an instance variable is set on <code>shapy_person</code>, the object transitions to a new shape.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">shapy_person</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Alice&#34;</span> <span class="c1"># Transitions to a new shape with ID: 1 via edge @name</span>
+</span></span><span class="line"><span class="cl"><span class="n">shapy_person</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># Transitions to a new shape with ID: 2 via edge @age</span>
+</span></span></code></pre></div><p>It transitions to shape with <code>ID: 1</code> and edge <code>@name</code> when <code>@name</code> is set. Then, it transitions to a shape with <code>ID: 2</code> and edge <code>@age</code> when <code>@age</code> is set.</p>
+<style type="text/css">
+  .mermaid {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px 25px 0px
+  } 
+</style>
+
+<div class="mermaid">
+flowchart TB
+  A[ID: 0, IV count: 0]
+  B[ID: 1, IV count: 1]
+  C[ID: 2, IV count: 2]
+  A -->|"@name"| B -->|"@age"| C
+  subgraph "Root Shape"
+    A
+  end
+</div>
+<p>The shapes are independent of the values of the instance variables. So, if the value of <code>@name</code> is changed, the shape still remains the same.</p>
+<p>New objects with the same transitions will end up with the same shape. This is independent of the class of the object. This also includes the child classes since they, too, can re-use the shape transitions of the parent class. But, two objects can share the same shape only if the order in which their instance variables are set are the same. This is demonstrated in the code snippet below.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Car</span>
+</span></span><span class="line"><span class="cl">  <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:age</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">my_car</span> <span class="o">=</span> <span class="no">Car</span><span class="o">.</span><span class="n">new</span> <span class="c1"># Shape ID: 0</span>
+</span></span><span class="line"><span class="cl"><span class="n">my_car</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Tesla S&#34;</span> <span class="c1"># Shape ID: 1</span>
+</span></span><span class="line"><span class="cl"><span class="n">my_car</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Shape ID: 2</span>
+</span></span></code></pre></div><p>Consider this scenario:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">ceo_guy</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span> <span class="c1"># Shape ID: 0</span>
+</span></span><span class="line"><span class="cl"><span class="n">ceo_guy</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Elon&#34;</span> <span class="c1"># Shape ID: 1</span>
+</span></span><span class="line"><span class="cl"><span class="n">ceo_guy</span><span class="o">.</span><span class="n">country</span> <span class="o">=</span> <span class="s2">&#34;South Africa&#34;</span> <span class="c1"># Transitions to shape ID: 3 with edge @country</span>
+</span></span><span class="line"><span class="cl"><span class="n">ceo_guy</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">51</span> <span class="c1"># Transitions to shape ID: 4 with edge @age</span>
+</span></span></code></pre></div><p>The diagram below shows the transitions involved. Blue represents the shared transitions, green represents transitions for <code>shapy_guy</code> only and orange represents transitions for <code>ceo_guy</code> only.</p>
+<style type="text/css">
+  .mermaid {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px 25px 0px
+  } 
+</style>
+
+<div class="mermaid">
+flowchart TB
+  A[ID: 0, IV count: 0]
+  B[ID: 1, IV count: 1]
+  C[ID: 2, IV count: 2]
+  D[ID: 3, IV count: 2]
+  E[ID: 4, IV count: 3]
+
+  A -->|"@name"| B -->|"@age"| C
+
+  B -->|"@country"| D -->|"@age"| E
+  subgraph "Root Shape"
+    A
+  end
+  subgraph ceo_guy
+    D
+    E
+  end
+  subgraph shapy_guy
+    C
+  end
+
+  classDef green fill:#9f6,stroke:#333,stroke-width:1px
+  classDef orange fill:#f96,stroke:#333,stroke-width:1px
+  classDef blue fill:#0ff,stroke:#333,stroke-width:1px
+  class D,E orange
+  class C green
+  class A,B blue
+</div>
+<p>As can be seen, the index of the instance variable that represents the incoming edge of a shape is given by <code>IV_count - 1</code>. For example, shape with <code>ID: 1</code> is created by <code>@name</code> and has <code>IV count: 1</code>.  It is the first variable to be set on the root shape. The index of <code>@name</code> in an object which has gone through shape with <code>ID: 1</code> will be <code>0</code> . This pattern continues further down the shape tree giving us the expression: <code>iv_index = iv_count - 1</code>.</p>
+<h3 id="how-does-the-current-shape-of-an-object-provide-the-index-of-all-instance-variables-of-the-object">How does the current shape of an object provide the index of all instance variables of the object?</h3>
+<p>Every shape contains information about the edge that created it and its parent shape. So, shape with <code>ID: 4</code> knows that it has been created by the instance variable <code>@age</code> and its parent shape is shape with <code>ID: 3</code>.</p>
+<p>To know the index of any instance variable, we walk up the shape tree and find the shape with an incoming edge represented by the instance variable whose index we need. Then the index is simply <code>1</code> less than the <code>IV count</code> of the shape.</p>
+<p>For example. if we need the index of <code>@name</code> for <code>ceo_guy</code>, we walk up the shape tree following the edges belonging to <code>ceo_guy</code> and end our search on shape with <code>ID: 1</code>. This gives us the index of <code>@name</code>.</p>
+<p>If no shape is found in the shape tree, a new shape is created from the current shape to store the instance variable being set in the object.</p>
+<p>Walking up the tree to find the index of an instance variable looks like an even more expensive process as compared to the index table lookup in pre-3.2.0 ruby. But, this cost is amortised when we consider that most objects of a class usually set their instance variables in the same order, which is helped by the interpreter&rsquo;s usage of inline cache similar to pre-3.2.0 ruby.</p>
+<h3 id="inline-caching-using-object-shapes">Inline caching using object shapes</h3>
+<p>When setting an instance variable, we can check if there is an outgoing edge from the current shape that represents the name of the instance variable. This gives us the <code>ID</code> of the next shape the object should transition into and the index where the value of the instance variable should be stored in the IV array. In contrast to pre-3.2.0 ruby, object shapes make this mechanism independent of the class of the object.</p>
+<p>After an instance variable is set for the first time, an inline cache is created in the setter. The <code>shape_ID</code> of the pre-transition shape acts as the cache key of the inline cache. We can also consider this to be the current shape ID of the object. The value of the cache holds the following values:</p>
+<ol>
+<li>Shape ID before the transition</li>
+<li>Shape ID after the transition</li>
+<li><code>iv_index</code>: Index in the IV array where the value of the instance variable should be stored</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="c1"># Pseudo-code demonstrating inline cache using object shapes</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">name</span><span class="o">=</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span> <span class="c1"># cache_key: 0 =&gt; current_shape_ID: 0, next_shape_ID: 1, iv_index: 0</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">age</span><span class="o">=</span><span class="p">(</span><span class="n">age</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="vi">@age</span> <span class="o">=</span> <span class="n">age</span> <span class="c1"># cache_key: 1 =&gt; current_shape_ID: 1, next_shape_ID: 2, iv_index: 1</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ic_person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span>
+</span></span><span class="line"><span class="cl"><span class="n">ic_person</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Kabir&#34;</span> <span class="c1"># creates the inline cache</span>
+</span></span><span class="line"><span class="cl"><span class="n">ic_person</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">56</span> <span class="c1"># creates the inline cache</span>
+</span></span></code></pre></div><p>After the cache has been created, a new object that tries to set the instance variable will be able to use the defined cache if its <code>shape_id</code> matches the <code>shape_ID</code> of the cache key. For instance:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="n">person2</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span> <span class="c1"># shape_id: 0</span>
+</span></span><span class="line"><span class="cl"><span class="n">person2</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Alice&#34;</span> <span class="c1"># shape_id: 1</span>
+</span></span><span class="line"><span class="cl"><span class="n">person2</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">40</span> <span class="c1"># shape_id: 2</span>
+</span></span></code></pre></div><p>Here, <code>person2</code> will be able to re-use the cache and does not have to refer the shape tree to get the appropriate <code>iv_index</code>.</p>
+<p>When trying to read an instance variable, the interpreter looks at the shape tree to get the <code>iv_index</code> for the first time. It, then, creates an inline cache where the cache key is the current shape ID and the cache values are:</p>
+<ol>
+<li>Current shape ID</li>
+<li><code>iv_index</code>: Index in the IV array where the value of the instance variable is stored</li>
+</ol>
+<p>Continuing from the example of <code>ic_person</code> above:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ruby" data-lang="ruby"><span class="line"><span class="cl"><span class="c1"># Shape ID of ic_person at this point is 2</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">age</span>
+</span></span><span class="line"><span class="cl">  <span class="vi">@age</span> <span class="c1"># cache_key: 2 =&gt; current_shape_ID: 2, iv_index: 1</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">name</span>
+</span></span><span class="line"><span class="cl">  <span class="vi">@name</span> <span class="c1"># cache_key: 2 =&gt; current_shape_ID: 2, iv_index: 0</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></div><p>Now, any object that tries to read the instance variables can use the cache as long as its <code>shape_id</code> matches the cache key.</p>
+<p>Since objects of child classes can share the same shapes as that of the parent class, this leads to an increase in number of cache hits as compared to pre-3.2.0 ruby’s implementation of IV index table.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Due to the increased number of cache hits, there are significant performance gains for the Ruby interpreter. You should view the benchmark measurements in the <a href="https://bugs.ruby-lang.org/issues/18776">ruby issue tracker</a> to appreciate the difference that it makes.</p>
+<p>Usage of object shapes also reduces the number of checks that ruby performs every time an instance variable is read or written. Some of those checks include:</p>
+<ul>
+<li>If the object is frozen</li>
+<li>If the object has the instance variable you are trying to read</li>
+</ul>
+<p>For the sake of brevity, these topics have been left out for another day. For those interested, you can refer to the excellent content listed in the <a href="#references">references section</a>. If you only have time for one link, you should <a href="https://www.youtube.com/watch?v=R0oxlyVUpDw">watch the 30-minute talk</a> given on the topic by Aaron Patterson.</p>
+<h2 id="authors-of-this-implementation">Authors of this implementation</h2>
+<ul>
+<li><a href="https://tenderlovemaking.com/">Aaron Patterson</a></li>
+<li><a href="https://jemma.dev/">Jemma Issroff</a></li>
+<li><a href="https://eileencodes.com/">Eileen Uchitelle</a></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.ruby-lang.org/en/news/2022/12/25/ruby-3-2-0-released/">Ruby 3.2.0 release notes</a></li>
+<li><a href="https://bugs.ruby-lang.org/issues/18776">Implementation of Object shapes - Ruby Issue Tracker</a></li>
+<li><a href="https://www.youtube.com/watch?v=C9q4V_WJ6_k">A pair programming session between Aaron Patterson and Jemma Issroff</a></li>
+<li><a href="https://chrisseaton.com/truffleruby/rubykaigi21/">The Future Shape of Ruby objects</a></li>
+<li><a href="https://www.youtube.com/watch?v=R0oxlyVUpDw">RubyConf 2022: Don&rsquo;t @ me! Faster Instance Variables with Object Shapes by Aaron Patterson</a> (Highly recommended)</li>
+<li><a href="https://www.youtube.com/watch?v=2aVyTtxs0GU&amp;t=774s">Implementing Object Shapes in CRuby by Jemma Issroff</a></li>
+<li><a href="https://richardartoul.github.io/jekyll/update/2015/04/26/hidden-classes.html">Javascript Hidden Classes and Inline Caching in V8</a></li>
+<li><a href="https://tenderlovemaking.com/2019/06/26/instance-variable-performance.html">Instance variable performance - Aaron Patterson</a></li>
+</ul>
+<h2 id="footnotes">Footnotes</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>For the purpose of brevity, we will be interchangeably using instance variable and IV to mean the same entity.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>In case the number of instance variables are more than three, they are stored in a separate memory space and the pointer to that array is stored at the 16th byte. Such an object is called an <strong>extended object</strong>. Objects which store the instance variables within the object&rsquo;s memory space are called <strong>embedded objects</strong>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://richardartoul.github.io/jekyll/update/2015/04/26/hidden-classes.html">Inline caching in Javascript</a> and the <a href="https://en.wikipedia.org/wiki/Inline_caching">wiki page on Inline caching</a> are excellent resources to learn more about it&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>To learn why we use the class name as cache key, I recommend <a href="https://www.youtube.com/watch?v=R0oxlyVUpDw&amp;t=785s">watching this talk from the URL annotated time</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>This can be an interesting mental exercise for you to figure out why the given code can never take advantage of the inline cache.&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+  </div>
+    
+      <script
+  type="application/javascript"
+  src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"
+></script>
+<script>
+  var config = {
+    startOnLoad: true,
+    theme:'neutral',
+    align:'center',
+  };
+  mermaid.initialize(config);
+</script>
+    
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://d265ea6a.my-personal-site-37w.pages.dev/tags/ruby/">ruby</a></li>
+    </ul>
+
+<div class="share-buttons">
+
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Object shapes - how this under-the-hood change in Ruby 3.2.0 will improve your code performance on linkedin"
+        href="https://www.linkedin.com/in/heycharlola/">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+</div>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>©2023 Ayush Poddar - ayushpoddar.com</span>
+      
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
