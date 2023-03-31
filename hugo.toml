@@ -1,4 +1,4 @@
-baseURL = 'https://ayush.my-personal-site-37w.pages.dev/'
+baseURL = '/'
 languageCode = 'en-IN'
 title = 'Poddar, Ayush'
 theme = 'charlolamode'
