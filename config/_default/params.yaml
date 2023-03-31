@@ -1,0 +1,52 @@
+author: Ayush Poddar
+
+defaultTheme: auto
+# disableThemeToggle: true
+ShowShareButtons: true
+ShowReadingTime: true
+displayFullLangName: true
+ShowBreadCrumbs: true
+ShowCodeCopyButtons: true
+ShowToc: true
+
+mainSection: "posts"
+
+profileMode:
+  enabled: true
+  title: Ayush Poddar
+  description: "Hello, I am a software engineer.\n\nI have built numerous apps based on Ruby on Rails."
+  imageUrl: "/images/profile.png"
+  imageTitle: Ayush Poddar
+  # imageWidth: 120
+  # imageHeight: 120
+  buttons:
+      - name: Read my posts
+        url: "/posts"
+
+socialIcons:
+  - name: github
+    url: "https://github.com/ayushpoddar"
+  - name: linkedin
+    url: "https://www.linkedin.com/in/ayushp/"
+  - name: toptal
+    url: "https://www.toptal.com/resume/ayush-poddar"
+
+  # add more social icons. find more in svg.html file
+  # - name: youtube
+  #   url: yoururl
+  # - name: twitter
+  #   url: yoururl
+  # - name: facebook
+  #   url: yoururl
+
+# change favicon in images folder (icon for web tab)
+assets:
+  favicon: "/images/profile.png"
+  favicon16x16: "/images/profile.png"
+  favicon32x32: "/images/profile.png"
+  apple_touch_icon: "/images/profile.png"
+  safari_pinned_tab: "/images/profile.png"
+
+mermaid:
+  theme: "neutral"
+  align: "center"

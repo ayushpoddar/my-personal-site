@@ -1,0 +1,3 @@
+.toc-separator {
+  height: 3px;
+  color: blue; }

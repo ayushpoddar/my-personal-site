@@ -1,0 +1,16 @@
+baseURL = 'https://poddarayush.com/'
+languageCode = 'en-IN'
+title = 'Poddar, Ayush'
+theme = 'charlolamode'
+paginate = 8
+enableEmoji = true
+Copyright = "©2023 Ayush Poddar - ayushpoddar.com"
+sectionPagesMenu = 'main'
+summaryLength = 30
+
+enableInlineShortcodes = true
+enableRobotsTXT = true
+pygmentsUseClasses = true
+
+
+
