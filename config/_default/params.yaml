@@ -2,7 +2,7 @@ author: Ayush Poddar
 
 defaultTheme: auto
 # disableThemeToggle: true
-ShowShareButtons: true
+ShowShareButtons: false
 ShowReadingTime: true
 displayFullLangName: true
 ShowBreadCrumbs: true
