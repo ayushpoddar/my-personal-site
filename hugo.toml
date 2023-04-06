@@ -12,5 +12,14 @@ enableInlineShortcodes = true
 enableRobotsTXT = true
 pygmentsUseClasses = true
 
+enableGitInfo = true
+
+[frontmatter]
+  date = ['date', ':git', 'publishDate']
+  expiryDate = ['expiryDate']
+  lastmod = [':git', ':fileModTime', 'lastmod', 'date', 'publishDate']
+  publishDate = ['publishDate', 'date']
+
+
 
 

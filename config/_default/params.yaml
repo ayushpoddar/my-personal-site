@@ -8,6 +8,7 @@ displayFullLangName: true
 ShowBreadCrumbs: true
 ShowCodeCopyButtons: true
 ShowToc: true
+showLastUpdated: true
 
 mainSection: "posts"
 
