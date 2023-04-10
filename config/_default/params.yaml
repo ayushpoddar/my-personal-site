@@ -10,6 +10,8 @@ ShowCodeCopyButtons: true
 ShowToc: true
 showLastUpdated: true
 
+description: "Ayush Poddar - Software Engineer from India. Rubyist. This is my web home."
+
 mainSection: "posts"
 
 profileMode:
