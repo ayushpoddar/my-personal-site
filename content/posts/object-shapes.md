@@ -245,7 +245,7 @@ Every shape contains information about the edge that created it and its parent s
 
 To know the index of any instance variable, we walk up the shape tree and find the shape with an incoming edge represented by the instance variable whose index we need. Then the index is simply `1` less than the `IV count` of the shape.
 
-For example. if we need the index of `@name` for `ceo_guy`, we walk up the shape tree following the edges belonging to `ceo_guy` and end our search on shape with `ID: 1`. This gives us the index of `@name`.
+For example, if we need the index of `@name` for `ceo_guy`, we walk up the shape tree following the edges belonging to `ceo_guy` and end our search on shape with `ID: 1`. This gives us the index of `@name`.
 
 If no shape is found in the shape tree, a new shape is created from the current shape to store the instance variable being set in the object.
 
