@@ -69,7 +69,7 @@ The IV index table looks like:
 
 | Instance variable name | Index |
 | --- | --- |
-| @name | 0 |
+| `@name` | 0 |
 
 And the IV array looks like this:
 
