@@ -53,7 +53,7 @@ This is how the memory layout of `demo_guy` will look like:
 | 8 | Pointer to class (`Person`) |  |
 | 16 | Qundef (undefined) | IV array → Index: 0 |
 | 24 | Qundef (undefined) | IV array → Index: 1 |
-| 32 | Qundef (undefind) | IV array → Index: 2 |
+| 32 | Qundef (undefined) | IV array → Index: 2 |
 
 The array indices map to the instance variable names using a hash table called **IV index table.** This table is specific to the class (`Person` in this case) of the object, not the object.
 
@@ -77,9 +77,9 @@ And the IV array looks like this:
 | --- | --- |
 | 0 | "Alice" |
 | 1 | Qundef (undefined) |
-| 2 | Qundef (undefind) |
+| 2 | Qundef (undefined) |
 
-This is how the IV index table and IV array change after setting of each instance variable:
+This is how the IV index table and IV array change after setting each instance variable:
 
 ![Transition of IV index table and IV array as instance variables get set](https://i.imgur.com/5PUGdbA.jpg)
 
@@ -115,7 +115,7 @@ def name=(value)
 end
 ```
 
-### The problem - Dependency of object attributes to class
+### The problem - Dependency of object attributes on class
 
 Consider a new class inheriting from `Person`:
 
@@ -150,11 +150,11 @@ The shape of an object is defined by its properties (attributes).
 
 > ℹ️ **Info**
 >
-> *To limit the scope of this post, we will assume that only instance variables are responsible in defining an object's attributes.*
+> *To limit the scope of this post, we will assume that only instance variables are responsible for defining an object's attributes.*
 
 ### Implementation of object shapes
 
-There is one global shape tree. The shapes form the nodes of the tree and the instance variables which create those shapes form the edges. There is one root shape which represents a basic object with default properties only.
+There is one global shape tree. The shapes form the nodes of the tree and the instance variables which create those shapes form the edges. There is one root shape that represents a basic object with default properties only.
 
 Using the classes we defined above, consider a new instance of `Person`:
 
@@ -184,7 +184,7 @@ flowchart TB
 
 The shapes are independent of the values of the instance variables. So, if the value of `@name` is changed, the shape still remains the same.
 
-New objects with the same transitions will end up with the same shape. This is independent of the class of the object. This also includes the child classes since they, too, can re-use the shape transitions of the parent class. But, two objects can share the same shape only if the order in which their instance variables are set are the same. This is demonstrated in the code snippet below.
+New objects with the same transitions will end up with the same shape. This is independent of the class of the object. This also includes the child classes since they, too, can re-use the shape transitions of the parent class. But, two objects can share the same shape only if the order in which their instance variables are set is the same. This is demonstrated in the code snippet below.
 
 ```ruby
 class Car
