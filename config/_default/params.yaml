@@ -50,6 +50,9 @@ assets:
   apple_touch_icon: "/images/profile.png"
   safari_pinned_tab: "/images/profile.png"
 
+customcss:
+  - "css/canvas.css"
+
 mermaid:
   theme: "neutral"
   align: "center"

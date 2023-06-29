@@ -1,0 +1,7 @@
+div.canvas {
+  text-align: center;
+}
+
+div.canvas > canvas {
+  border-radius: 10px;
+}

@@ -58,6 +58,11 @@
 <link crossorigin="anonymous" href="{{ $stylesheet.RelPermalink }}" rel="preload stylesheet" as="style">
 {{- end }}
 
+<!-- Custom stylesheet in static folder -->
+{{ range .Site.Params.customcss }}
+  <link rel="stylesheet" href="{{ . | absURL }}">
+{{- end }}
+
 {{- with .Site.Params.profileMode }}
 {{- if and .enabled .imageUrl $.IsHome }}
 <link rel="preload" href="{{ .imageUrl }}" as="image">
