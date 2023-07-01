@@ -9,7 +9,6 @@ description: "Design a token payment system"
 summary: "How we implemented a fully trackable payment system"
 showReadingTime: true
 hideComments: true
-containsAnimation: true
 mermaid: false
 draft: true
 ---
@@ -28,4 +27,38 @@ internal wallet.
 
 The following animation demonstrates how the balances are updated with each transfer:
 
-{{< pixigsap token-payment-balance-update >}}
+{{< pixigsap "balance-transfer.js" token-payment-balance-update >}}
+
+## Problem #1 - Some tokens will expire; some won't
+The normal flow for the internal wallet until now was that the user purchases a few tokens from the
+platform. Then the user can choose to transfer a part of those tokens to other users on the
+platform.
+
+Now, a business requirement comes up that the tokens received by a user will expire in a month if
+the transfer satisfies some conditions, i.e., the receiver should use those tokens within a month of
+receipt.
+
+The conditions are not essential to the idea behind the post. They can be as crazy as - *the
+transfers take place in the first week of the month.*
+
+For example, if Tony transfers 3 tokens to Pepper Potts on June 2, then Pepper must use those tokens
+by July 2.
+
+### Storing the expiration date
+As clearly evident, just storing the balance will not suffice. We need multiple records now - each
+representing the token balance and its corresponding expiry.
+
+After a few people send some tokens to Pepper (*people really like her, it seems*🙃), her records
+would look like this:
+
+| Balance | Expiration Date | *Comments (not part of the database)* |
+| ------ | ------- | ------- |
+| 5 | `nil` | *Her initial balance - never expires* |
+| 3 | July 2, 2023 | *Received from Tony on June 2* |
+| 10 | July 3, 2023 | *Received on June 3 from someone* |
+| 5 | July 6, 2023 | *Received on June 6 from someone* |
+
+The following animation aptly demo-es how Pepper's balances will be updated if someone, now, sends
+10 tokens on June 7.
+
+{{< pixigsap "tokens-for-expiry.js" "token-payment-with-expiration-date" >}}
