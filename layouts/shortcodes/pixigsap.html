@@ -1,4 +1,8 @@
-<div id="{{ index .Params 0 }}" class="canvas">
+<div id="{{ index .Params 1 }}" class="canvas">
 </div>
 
-<script defer src="/animations/token-payments/balance-update.js" canvasId="{{ index .Params 0 }}"></script>
+{{ $filePath := path.Join "js" (index .Params 0) }}
+{{ $shims := dict "pixi" "node_modules/pixi/index.js" "gsap" "node_modules/gsap/index.js" }}
+
+{{ $animations := (resources.Get $filePath) | js.Build (dict "shims" $shims "params" (dict "id" (index .Params 1))) }}
+<script defer type="module" src="{{ $animations.RelPermalink }}"></script>
