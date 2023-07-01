@@ -9,6 +9,7 @@ description: "Design a token payment system"
 summary: "How we implemented a fully trackable payment system"
 showReadingTime: true
 hideComments: true
+enableAnimation: true
 mermaid: false
 draft: true
 ---

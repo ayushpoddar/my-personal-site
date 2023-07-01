@@ -1,7 +1,5 @@
 import * as config from "./config.js";
 import * as params from "@params";
-import * as PIXI from "pixi";
-// import { gsap } from "gsap";
 
 let app;
 

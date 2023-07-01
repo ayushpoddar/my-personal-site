@@ -1,5 +1,3 @@
-import * as PIXI from "pixi";
-
 const loadApp = function ({
   id,
   width = config.canvasWidth,

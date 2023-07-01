@@ -2,7 +2,6 @@
 </div>
 
 {{ $filePath := path.Join "js" (index .Params 0) }}
-{{ $shims := dict "pixi" "node_modules/pixi/index.js" "gsap" "node_modules/gsap/index.js" }}
 
-{{ $animations := (resources.Get $filePath) | js.Build (dict "shims" $shims "params" (dict "id" (index .Params 1))) }}
+{{ $animations := (resources.Get $filePath) | js.Build (dict "params" (dict "id" (index .Params 1))) }}
 <script defer type="module" src="{{ $animations.RelPermalink }}"></script>

@@ -9,6 +9,7 @@ description:
 summary:
 showReadingTime: true
 hideComments: true
+enableAnimation: false
 mermaid: false
 draft: true
 ---

@@ -135,4 +135,8 @@
         }
     });
 </script>
+
+{{ if (.Params.enableAnimation) }}
+  {{ partial "pixigsap.html" }}
+{{ end }}
 {{- end }}
