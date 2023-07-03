@@ -13,6 +13,17 @@ const loadApp = function ({
   return app;
 };
 
+// function that takes a function and returns a function
+const memoize = (func) => {
+  const results = {};
+  return (...args) => {
+    const argsKey = JSON.stringify(args);
+    if (!results[argsKey]) {
+      results[argsKey] = func(...args);
+    }
+    return results[argsKey];
+  };
+};
 
 function assetPath(assetName) {
   if (window.location.host.includes("localhost:3000")) {
@@ -25,6 +36,7 @@ const config = {
   canvasWidth: 300,
   canvasHeight: 200,
   loadApp: loadApp,
+  memoizer: memoize,
   assetPath: assetPath,
 };
 
