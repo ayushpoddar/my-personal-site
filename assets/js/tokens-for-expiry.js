@@ -1,7 +1,9 @@
 import config from "./config.js";
+import helpers from "./helpers.js";
 import * as params from "@params";
 
 const id = params.id;
+const element = document.getElementById(id);
 const canvasWidth = 400;
 const initialCoinX = canvasWidth + 30;
 const cellBgColor = 0x4a55a2;
@@ -19,6 +21,9 @@ async function init() {
   hiddenCells = tableContainer.children.slice(-2);
 
   finalCoinX = tableContainer.x + tableContainer.width / 2;
+}
+
+function startAnimation() {
   setInterval(() => {
     if (runAnimation) {
       moveCoin();
@@ -173,4 +178,6 @@ const createCellBgTexture = config.memoizer((width, height) => {
   return app.renderer.generateTexture(border);
 });
 
-init();
+init().then((_) => {
+  helpers.startAnimationOnView(element, startAnimation);
+});

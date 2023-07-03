@@ -1,10 +1,12 @@
 import config from "./config.js";
+import helpers from "./helpers.js";
 import * as params from "@params";
 
 const initialAliceBalance = 10;
 const initialBobBalance = 0;
 const numTransfers = 5;
 const id = params.id;
+const element = document.getElementById(id);
 
 let aliceBalance = initialAliceBalance;
 let bobBalance = initialBobBalance;
@@ -40,8 +42,6 @@ async function init() {
 
   coin = createCoin(coinTexture);
   app.stage.addChildAt(coin, 0);
-
-  transferCoins();
 }
 
 function setUpAliceBob(texture, xPos, balance, person) {
@@ -169,4 +169,6 @@ function transferCoins() {
   }
 }
 
-init();
+init().then(() => {
+  helpers.startAnimationOnView(element, transferCoins);
+});
