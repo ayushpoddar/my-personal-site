@@ -59,7 +59,6 @@ would look like this:
 | 10 | July 3, 2023 | *Received on June 3 from someone* |
 | 5 | July 6, 2023 | *Received on June 6 from someone* |
 
-The following animation aptly demo-es how Pepper's balances will be updated if someone, now, sends
-10 tokens on June 7.
+The following animation aptly demo-es how Pepper's balances will be updated if someone, now, sends 5 tokens on June 7.
 
 {{< pixigsap "tokens-for-expiry.js" "token-payment-with-expiration-date" >}}
