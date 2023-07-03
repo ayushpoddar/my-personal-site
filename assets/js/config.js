@@ -19,4 +19,4 @@ const config = {
   loadApp: loadApp,
 };
 
-module.exports = config;
+export default config;
