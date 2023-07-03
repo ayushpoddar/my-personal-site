@@ -9,11 +9,11 @@ const initialCoinX = canvasWidth + 30;
 const cellBgColor = 0x4a55a2;
 const cellTextColor = 0xf7f1e5;
 
-let app, hiddenCells, coin, finalCoinX;
+let hiddenCells, coin, finalCoinX;
 let runAnimation = true;
+let app = helpers.loadApp({ element: element, width: canvasWidth });
 
 async function init() {
-  app = config.loadApp({ id: id, width: canvasWidth });
   const coinTexture = await PIXI.Assets.load(config.assetPath("coins.png"));
   coin = createCoin(coinTexture);
 

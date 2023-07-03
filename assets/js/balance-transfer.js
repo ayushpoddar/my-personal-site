@@ -10,17 +10,11 @@ const element = document.getElementById(id);
 
 let aliceBalance = initialAliceBalance;
 let bobBalance = initialBobBalance;
-let app,
-  alice,
-  aliceBalanceText,
-  bob,
-  bobBalanceText,
-  reloadButton,
-  coin,
-  overlay;
+let alice, aliceBalanceText, bob, bobBalanceText, reloadButton, coin, overlay;
+
+let app = helpers.loadApp({ element: element });
 
 async function init() {
-  app = config.loadApp({ id: id });
   const bobTexture = await PIXI.Assets.load(config.assetPath("alice.png"));
   const aliceTexture = await PIXI.Assets.load(config.assetPath("bob.png"));
   const coinTexture = await PIXI.Assets.load(config.assetPath("token.png"));
