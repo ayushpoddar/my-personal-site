@@ -19,10 +19,10 @@ let app,
 
 async function init() {
   app = config.loadApp({ id: id });
-  const bobTexture = await PIXI.Assets.load(assetPath("alice.png"));
-  const aliceTexture = await PIXI.Assets.load(assetPath("bob.png"));
-  const coinTexture = await PIXI.Assets.load(assetPath("token.png"));
-  const reloadTexture = await PIXI.Assets.load(assetPath("reload.png"));
+  const bobTexture = await PIXI.Assets.load(config.assetPath("alice.png"));
+  const aliceTexture = await PIXI.Assets.load(config.assetPath("bob.png"));
+  const coinTexture = await PIXI.Assets.load(config.assetPath("token.png"));
+  const reloadTexture = await PIXI.Assets.load(config.assetPath("reload.png"));
   ({ container: alice, balanceText: aliceBalanceText } = setUpAliceBob(
     aliceTexture,
     50,
@@ -167,10 +167,6 @@ function transferCoins() {
       }
     );
   }
-}
-
-function assetPath(assetName) {
-  return `/images/${assetName}`;
 }
 
 init();

@@ -13,10 +13,19 @@ const loadApp = function ({
   return app;
 };
 
+
+function assetPath(assetName) {
+  if (window.location.host.includes("localhost:3000")) {
+    return `../../static/images/${assetName}`;
+  }
+  return `/images/${assetName}`;
+}
+
 const config = {
   canvasWidth: 300,
   canvasHeight: 200,
   loadApp: loadApp,
+  assetPath: assetPath,
 };
 
 export default config;
