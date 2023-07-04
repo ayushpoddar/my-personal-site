@@ -7,7 +7,7 @@ const isInViewPort = (element) => {
     rect.left >= 0 &&
     rect.bottom <=
       (window.innerHeight || document.documentElement.clientHeight) * 0.9 &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    rect.right <= config.windowWidth
   );
 };
 
@@ -55,9 +55,14 @@ const memoizer = (func) => {
   };
 };
 
+const setCanvasWidth = (desiredWidth) => {
+  return Math.min(config.windowWidth, desiredWidth);
+};
+
 export default {
   startAnimationOnView,
   loadApp,
   assetPath,
   memoizer,
+  setCanvasWidth,
 };

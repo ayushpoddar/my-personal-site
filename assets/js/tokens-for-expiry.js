@@ -1,10 +1,9 @@
-import config from "./config.js";
 import helpers from "./helpers.js";
 import * as params from "@params";
 
 const id = params.id;
 const element = document.getElementById(id);
-const canvasWidth = 400;
+const canvasWidth = helpers.setCanvasWidth(400);
 const initialCoinX = canvasWidth + 30;
 const cellBgColor = 0x4a55a2;
 const cellTextColor = 0xf7f1e5;

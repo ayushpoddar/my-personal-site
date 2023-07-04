@@ -1,6 +1,9 @@
-const config = {
-  canvasWidth: 300,
-  canvasHeight: 200,
-};
+const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+const canvasWidth = Math.min(windowWidth, 300);
+const canvasHeight = 200;
 
-export default config;
+export default {
+  windowWidth,
+  canvasWidth,
+  canvasHeight,
+};
