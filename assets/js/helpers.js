@@ -11,6 +11,10 @@ const isInViewPort = (element) => {
   );
 };
 
+// TODO: This function can be more efficient:
+// - DRY the code
+// - Every animation element is registering its own scroll
+// - event. Can we do all these under one scroll event listener?
 const startAnimationOnView = (element, callback) => {
   if (element.dataset.animationStarted == "true") return;
   if (isInViewPort(element)) {
