@@ -66,11 +66,17 @@ function displayHiddenCells() {
 }
 
 function reset() {
+  const delay = 2.5;
+  gsap.to(coin, {
+    x: initialCoinX,
+    duration: 0.3,
+    delay: delay,
+  });
   hiddenCells.forEach((cell) => {
     gsap.to(cell, {
       alpha: 0,
       duration: 0.3,
-      delay: 2.5,
+      delay: delay,
       onComplete: () => {
         runAnimation = true;
       },
