@@ -12,6 +12,12 @@ const isInViewPort = (element) => {
 };
 
 const startAnimationOnView = (element, callback) => {
+  if (element.dataset.animationStarted == "true") return;
+  if (isInViewPort(element)) {
+    element.dataset.animationStarted = "true";
+    callback();
+    return;
+  }
   window.addEventListener("scroll", () => {
     if (element.dataset.animationStarted == "true") return;
     if (isInViewPort(element)) {
