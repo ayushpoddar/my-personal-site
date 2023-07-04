@@ -11,6 +11,10 @@ const isInViewPort = (element) => {
   );
 };
 
+const isDevMode = () => {
+  return window.location.host.includes("localhost:3000");
+};
+
 // TODO: This function can be more efficient:
 // - DRY the code
 // - Every animation element is registering its own scroll
@@ -47,7 +51,7 @@ const loadApp = ({
 };
 
 function assetPath(assetName) {
-  if (window.location.host.includes("localhost:3000")) {
+  if (isDevMode()) {
     return `../../static/images/${assetName}`;
   }
   return `/images/${assetName}`;
@@ -78,6 +82,7 @@ const midY = (app) => {
 };
 
 export default {
+  isDevMode,
   startAnimationOnView,
   loadApp,
   assetPath,

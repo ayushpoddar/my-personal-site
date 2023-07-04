@@ -1,7 +1,13 @@
+import config from "./config.js";
 import helpers from "./helpers.js";
 import * as params from "@params";
 
-const id = params.id;
+let id;
+if (helpers.isDevMode()) {
+  id = config.testCanvasId;
+} else {
+  id = params.id;
+}
 const element = document.getElementById(id);
 const canvasWidth = helpers.setCanvasWidth(400);
 const initialCoinX = canvasWidth + 30;
