@@ -15,10 +15,10 @@ let alice, aliceBalanceText, bob, bobBalanceText, reloadButton, coin, overlay;
 let app = helpers.loadApp({ element: element });
 
 async function init() {
-  const bobTexture = await PIXI.Assets.load(config.assetPath("alice.png"));
-  const aliceTexture = await PIXI.Assets.load(config.assetPath("bob.png"));
-  const coinTexture = await PIXI.Assets.load(config.assetPath("token.png"));
-  const reloadTexture = await PIXI.Assets.load(config.assetPath("reload.png"));
+  const bobTexture = await PIXI.Assets.load(helpers.assetPath("alice.png"));
+  const aliceTexture = await PIXI.Assets.load(helpers.assetPath("bob.png"));
+  const coinTexture = await PIXI.Assets.load(helpers.assetPath("token.png"));
+  const reloadTexture = await PIXI.Assets.load(helpers.assetPath("reload.png"));
   ({ container: alice, balanceText: aliceBalanceText } = setUpAliceBob(
     aliceTexture,
     50,

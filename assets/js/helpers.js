@@ -36,7 +36,28 @@ const loadApp = ({
   return app;
 };
 
+function assetPath(assetName) {
+  if (window.location.host.includes("localhost:3000")) {
+    return `../../static/images/${assetName}`;
+  }
+  return `/images/${assetName}`;
+}
+
+// function that takes a function and returns a function
+const memoizer = (func) => {
+  const results = {};
+  return (...args) => {
+    const argsKey = JSON.stringify(args);
+    if (!results[argsKey]) {
+      results[argsKey] = func(...args);
+    }
+    return results[argsKey];
+  };
+};
+
 export default {
   startAnimationOnView,
   loadApp,
+  assetPath,
+  memoizer,
 };

@@ -14,7 +14,7 @@ let runAnimation = true;
 let app = helpers.loadApp({ element: element, width: canvasWidth });
 
 async function init() {
-  const coinTexture = await PIXI.Assets.load(config.assetPath("coins.png"));
+  const coinTexture = await PIXI.Assets.load(helpers.assetPath("coins.png"));
   coin = createCoin(coinTexture);
 
   const tableContainer = initialiseTable();
@@ -169,7 +169,7 @@ function createTableCell(cellWidth, cellHeight, text, textStyle, hidden) {
   return container;
 }
 
-const createCellBgTexture = config.memoizer((width, height) => {
+const createCellBgTexture = helpers.memoizer((width, height) => {
   const border = new PIXI.Graphics();
   border.beginFill(cellBgColor, 1);
   border.drawRect(0, 0, width, height);
