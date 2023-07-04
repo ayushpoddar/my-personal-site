@@ -59,10 +59,20 @@ const setCanvasWidth = (desiredWidth) => {
   return Math.min(config.windowWidth, desiredWidth);
 };
 
+const midX = (app) => {
+  return app.screen.width / 2;
+};
+
+const midY = (app) => {
+  return app.screen.height / 2;
+};
+
 export default {
   startAnimationOnView,
   loadApp,
   assetPath,
   memoizer,
   setCanvasWidth,
+  midX,
+  midY,
 };
