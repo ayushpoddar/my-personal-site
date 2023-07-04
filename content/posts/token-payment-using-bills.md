@@ -62,3 +62,30 @@ would look like this:
 The following animation aptly demo-es how Pepper's balances will be updated if someone, now, sends 5 tokens on June 7.
 
 {{< pixigsap "tokens-for-expiry.js" "token-payment-with-expiration-date" >}}
+
+## Pepper wants to transfer tokens
+Common sense says that when you want to transfer tokens to someone, you should be sending the tokens
+that are closest to their expiry date. We will try to achieve that requirement.
+
+For example, if Pepper has to transfer 3 tokens to Tony, then she will choose the tokens which will
+expire on July 2 to send first.
+
+Assume that she wants to send 11 tokens to Tony. As per the logic of using the tokens closest to their
+expiry date, the following tokens will be sent:
+
+1. 3 tokens due for expiry on July 2
+2. 10 tokens due for expiry on July 3
+
+But, the sum of these two will equal 13. That is a problem!
+
+### The solution - Keep the change
+What would you do if you faced this scenario when making a payment in the grocery store. Imagine you
+have two currency bills (real paper money) of values $3 and $10 respectively.
+
+{{< figure src="/images/money-assorted.jpg" caption="Money, money and more money" width="600" >}}
+
+You would give these two bills to the cashier and the cashier would return the change, i.e., $2.
+
+Similarly, we could model our system to follow this transactional system, with added advantage of being able to
+break up a paper bill into smaller denominations of any value. The $10 bill can be torn (broken)
+into a $2 bill and a $8 bill.
