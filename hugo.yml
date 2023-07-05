@@ -11,6 +11,7 @@ enableInlineShortcodes: true
 enableRobotsTXT: true
 pygmentsUseClasses: true
 enableGitInfo: true
+enableEmoji: true
 
 frontmatter:
   date:
