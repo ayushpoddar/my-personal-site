@@ -83,6 +83,27 @@ const midY = (app = null) => {
   return config.canvasHeight / 2;
 };
 
+function createGsapTimeline({
+  delay = 2,
+  reverseTimeScale = 4,
+  initialTimeScale = 1,
+  repeatDelay = 4,
+} = {}) {
+  const tl = gsap.timeline({
+    repeat: -1,
+    yoyo: true,
+    repeatDelay: repeatDelay,
+    onRepeat: toggleTimeScale,
+  });
+
+  function toggleTimeScale() {
+    tl.timeScale(
+      tl.timeScale() == reverseTimeScale ? initialTimeScale : reverseTimeScale
+    );
+  }
+  return tl.delay(delay).timeScale(initialTimeScale);
+}
+
 export default {
   isDevMode,
   startAnimationOnView,
@@ -92,4 +113,5 @@ export default {
   setCanvasWidth,
   midX,
   midY,
+  createGsapTimeline,
 };
