@@ -2,15 +2,20 @@ import config from "./config.js";
 import helpers from "./helpers.js";
 import * as params from "@params";
 
+let id;
+if (helpers.isDevMode()) {
+  id = config.testCanvasId;
+} else {
+  id = params.id;
+}
 const initialAliceBalance = 10;
 const initialBobBalance = 0;
-const numTransfers = 5;
-const id = params.id;
+const numTransfers = 4;
 const element = document.getElementById(id);
 
 let aliceBalance = initialAliceBalance;
 let bobBalance = initialBobBalance;
-let alice, aliceBalanceText, bob, bobBalanceText, reloadButton, coin, overlay;
+let alice, aliceBalanceText, bob, bobBalanceText, coin;
 
 let app = helpers.loadApp({ element: element });
 
@@ -18,7 +23,6 @@ async function init() {
   const bobTexture = await PIXI.Assets.load(helpers.assetPath("alice.png"));
   const aliceTexture = await PIXI.Assets.load(helpers.assetPath("bob.png"));
   const coinTexture = await PIXI.Assets.load(helpers.assetPath("token.png"));
-  const reloadTexture = await PIXI.Assets.load(helpers.assetPath("reload.png"));
   ({ container: alice, balanceText: aliceBalanceText } = setUpAliceBob(
     aliceTexture,
     50,
@@ -31,8 +35,6 @@ async function init() {
     bobBalance,
     "Pepper"
   ));
-  overlay = createOverlay();
-  reloadButton = createReloadButton(reloadTexture);
 
   coin = createCoin(coinTexture);
   app.stage.addChildAt(coin, 0);
@@ -74,42 +76,6 @@ function setUpAliceBob(texture, xPos, balance, person) {
   return { container, balanceText };
 }
 
-function createReloadButton(texture) {
-  const reloadSprite = PIXI.Sprite.from(texture);
-
-  reloadSprite.anchor.set(0.5);
-  reloadSprite.x = app.screen.width / 2;
-  reloadSprite.y = app.screen.height / 2;
-  reloadSprite.alpha = 0.8;
-  reloadSprite.height = reloadSprite.width = config.canvasWidth / 8;
-
-  app.stage.addChild(reloadSprite);
-
-  reloadSprite.on("click", function () {
-    aliceBalance = initialAliceBalance;
-    updateBalanceText("alice");
-
-    bobBalance = initialBobBalance;
-    updateBalanceText("bob");
-
-    overlay.visible = false;
-    reloadButton.visible = false;
-    transferCoins();
-  });
-  reloadSprite.visible = false;
-  return reloadSprite;
-}
-
-function createOverlay() {
-  const obj = new PIXI.Graphics();
-  obj.beginFill(0x000000, 0.2);
-  obj.drawRect(0, 0, config.canvasWidth, config.canvasHeight);
-  obj.visible = false;
-
-  app.stage.addChild(obj);
-  return obj;
-}
-
 function createCoin(texture) {
   const coinSprite = PIXI.Sprite.from(texture);
   coinSprite.anchor.set(0.5);
@@ -121,15 +87,6 @@ function createCoin(texture) {
   return coinSprite;
 }
 
-function displayReload() {
-  setTimeout(function () {
-    overlay.visible = true;
-    reloadButton.visible = true;
-    reloadButton.eventMode = "static";
-    reloadButton.buttonMode = true;
-  }, 400);
-}
-
 function updateBalanceText(person) {
   if (person === "alice") {
     aliceBalanceText.text = `Balance: ${aliceBalance}`;
@@ -139,8 +96,9 @@ function updateBalanceText(person) {
 }
 
 function transferCoins() {
+  const tl = helpers.createGsapTimeline({ reverseTimeScale: 6 });
   for (let i = 1; i <= numTransfers; i++) {
-    gsap.fromTo(
+    tl.fromTo(
       coin,
       {
         x: alice.x,
@@ -149,18 +107,24 @@ function transferCoins() {
       {
         x: bob.x,
         y: bob.y,
-        delay: i * 1.4,
         duration: 1.25,
-        onComplete: function () {
+        onComplete: () => {
           aliceBalance--;
           bobBalance++;
           updateBalanceText("alice");
           updateBalanceText("bob");
-          if (i === numTransfers) displayReload();
         },
-      }
+        onReverseComplete: () => {
+          aliceBalance++;
+          bobBalance--;
+          updateBalanceText("alice");
+          updateBalanceText("bob");
+        },
+      },
+      "+=0.25"
     );
   }
+  tl.play();
 }
 
 init().then(() => {
