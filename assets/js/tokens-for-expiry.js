@@ -15,7 +15,6 @@ const cellBgColor = 0x4a55a2;
 const cellTextColor = 0xf7f1e5;
 
 let hiddenCells, coin, finalCoinX;
-let runAnimation = true;
 let app = helpers.loadApp({ element: element, width: canvasWidth });
 
 async function init() {
@@ -25,62 +24,36 @@ async function init() {
   const tableContainer = initialiseTable();
   hiddenCells = tableContainer.children.slice(-2);
 
-  finalCoinX = tableContainer.x + tableContainer.width / 2;
+  finalCoinX = tableContainer.x + tableContainer.width * 0.85;
 }
 
 function startAnimation() {
-  setInterval(() => {
-    if (runAnimation) {
-      moveCoin();
-      runAnimation = false;
-    }
-  }, 500);
-}
-
-function moveCoin() {
-  gsap.fromTo(
+  const tl = helpers.createGsapTimeline({
+    delay: 0.5,
+    repeatDelay: 2.5,
+    reverseTimeScale: 6,
+  });
+  tl.fromTo(
     coin,
     { x: initialCoinX },
     {
       x: finalCoinX,
-      delay: 0.5,
-      duration: 2.5,
-      onComplete: displayHiddenCells,
+      rotation: -7,
+      duration: 3.5,
+      ease: "power4.out",
     }
   );
-}
-
-function displayHiddenCells() {
+  tl.addLabel("showTable");
   hiddenCells.forEach((cell) => {
-    gsap.fromTo(
+    tl.fromTo(
       cell,
       { alpha: 0 },
       {
         alpha: 1,
         duration: 0.3,
-        delay: 0.1,
-        onComplete: reset,
-      }
-    );
-  });
-}
-
-function reset() {
-  const delay = 2.5;
-  gsap.to(coin, {
-    x: initialCoinX,
-    duration: 0.3,
-    delay: delay,
-  });
-  hiddenCells.forEach((cell) => {
-    gsap.to(cell, {
-      alpha: 0,
-      duration: 0.3,
-      delay: delay,
-      onComplete: () => {
-        runAnimation = true;
       },
-    });
+      "showTable"
+    );
   });
 }
 
