@@ -73,12 +73,14 @@ const setCanvasWidth = (desiredWidth) => {
   return Math.min(config.windowWidth, desiredWidth);
 };
 
-const midX = (app) => {
-  return app.screen.width / 2;
+const midX = (app = null) => {
+  if (app) return app.screen.width / 2;
+  return config.canvasWidth / 2;
 };
 
-const midY = (app) => {
-  return app.screen.height / 2;
+const midY = (app = null) => {
+  if (app) return app.screen.height / 2;
+  return config.canvasHeight / 2;
 };
 
 export default {
