@@ -82,10 +82,16 @@ But, the sum of these two will equal 13. That is a problem!
 What would you do if you faced this scenario when making a payment in the grocery store. Imagine you
 have two currency bills (real paper money) of values $3 and $10 respectively.
 
-{{< figure src="/images/money-assorted.jpg" caption="Money, money and more money" width="600" >}}
+{{< figure src="/images/money-assorted.jpg" caption="Why is the term 'green' used for cash? 🤔" width="600" >}}
 
 You would give these two bills to the cashier and the cashier would return the change, i.e., $2.
 
 Similarly, we could model our system to follow this transactional system, with added advantage of being able to
-break up a paper bill into smaller denominations of any value. The $10 bill can be torn (broken)
-into a $2 bill and a $8 bill.
+break up a paper bill into smaller denominations of any value. The $10 bill can be broken (torn)
+into a $2 bill and a $8 bill. This will lead to Alice possessing these token "bills":
+
+1. 3 tokens due for expiry on July 2
+2. 8 tokens due for expiry on July 3
+3. 2 tokens due for expiry on July 3
+
+{{< pixigsap "splitting-of-tokens.js" token-payment-split-tokens >}}
