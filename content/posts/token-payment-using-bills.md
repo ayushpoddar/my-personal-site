@@ -28,7 +28,7 @@ internal wallet.
 
 The following animation demonstrates how the balances are updated with each transfer:
 
-{{< pixigsap "balance-transfer.js" token-payment-balance-update >}}
+{{< pixigsap "balance-transfer.js" >}}
 
 ## Problem #1 - Some tokens will expire; some won't
 The normal flow for the internal wallet until now was that the user purchases a few tokens from the
@@ -61,9 +61,9 @@ would look like this:
 
 The following animation aptly demo-es how Pepper's balances will be updated if someone, now, sends 5 tokens on June 7.
 
-{{< pixigsap "tokens-for-expiry.js" "token-payment-with-expiration-date" >}}
+{{< pixigsap "tokens-for-expiry.js" >}}
 
-## Pepper wants to transfer tokens
+## Problem #2 - Pepper wants to transfer tokens
 Common sense says that when you want to transfer tokens to someone, you should be sending the tokens
 that are closest to their expiry date. We will try to achieve that requirement.
 
@@ -94,4 +94,35 @@ into a $2 bill and a $8 bill. This will lead to Alice possessing these token "bi
 2. 8 tokens due for expiry on July 3
 3. 2 tokens due for expiry on July 3
 
-{{< pixigsap "splitting-of-tokens.js" token-payment-split-tokens >}}
+Next, the 3-token bill and the 8-token bill can be transferred to Tony, updating his respective
+token balances.
+
+{{< pixigsap "splitting-of-tokens.js" >}}
+
+## Problem #3 - Tracking each token's lifecycle
+
+For simplicity's sake, lets assume that all the tokens in our platform never expire. Every user has
+a token balance to their name.
+
+For example: Pepper receives 2 tokens each from Tony, Jarvis, Happy, Rhodey and Joker. This means
+that she has a balance of 10 tokens after these transactions. Now, she wants to transfer 4 tokens to
+Peter. The balances will be updated for Pepper and Peter. But, we don't have a way to find whether
+the tokens received by Peter were originally transferred by Tony and Jarvis OR Happy and Joker.
+
+<!-- TODO: Animation for the above paragraph -->
+
+Essentially, the problem is: As an admin, I want to know who were the owners of each token that you
+(as a user) currenly have in your wallet. In other words, I want to keep track of each token's
+lifecycle as it changes hands.
+
+### Solution - Your wallet's balance is the sum of all the paper money it holds
+
+#### Part I
+
+Instead of storing the total balance, we store the "token bills" we introduced above. When Pepper
+purchases 2 tokens in the platform, instead of updating her balance, we add a "token bill" worth 2
+tokens to her account.
+
+### Technical Deep Dive
+When implementing the technical solution, we made a slight tweak to the solution discussed until
+now. Instead of storing the tokens as 
