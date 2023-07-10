@@ -1,7 +1,9 @@
-<div id="{{ index .Params 1 }}" class="canvas" data-animation-started=false>
+{{ $id := (md5 (.Get 0)) }}
+
+<div id="{{ $id }}" class="canvas" data-animation-started=false>
 </div>
 
-{{ $filePath := path.Join "js" (index .Params 0) }}
+{{ $filePath := path.Join "js" (.Get 0) }}
 
-{{ $animations := (resources.Get $filePath) | js.Build (dict "params" (dict "id" (index .Params 1))) }}
+{{ $animations := (resources.Get $filePath) | js.Build (dict "params" (dict "id" $id)) }}
 <script defer type="module" src="{{ $animations.RelPermalink }}"></script>
