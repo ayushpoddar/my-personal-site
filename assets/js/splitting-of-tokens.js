@@ -11,7 +11,7 @@ if (helpers.isDevMode()) {
 const element = document.getElementById(id);
 const coinOffsetX = config.canvasWidth / 4;
 
-let coin1, coin2, coin3, table1, table2;
+let coin, coin1, coin2, coin3, table1, table2, tony;
 let app = helpers.loadApp({ element: element });
 
 async function init() {
@@ -26,7 +26,7 @@ async function init() {
     helpers.assetPath("8-tokens.png")
   );
 
-  const coin = createCoin(coinTexture);
+  coin = createCoin(coinTexture);
   coin.x = coin.x - coinOffsetX;
   app.stage.addChild(coin);
 
@@ -53,6 +53,10 @@ async function init() {
   );
   table2 = createTable(table2Texture, 0);
   app.stage.addChild(table2);
+
+  const tonyTexture = await PIXI.Assets.load(helpers.assetPath("bob.png"));
+  tony = createTony(tonyTexture);
+  app.stage.addChild(tony);
 }
 
 function startAnimation() {
@@ -71,6 +75,21 @@ function startAnimation() {
     .to(coin3, { alpha: 1, duration: 3 }, "resetCoin1")
     .to(table1, { alpha: 0, duration: 3 }, "move")
     .to(table2, { alpha: 1, duration: 2.2 }, "move")
+    .to(table2, { x: helpers.midX() - app.screen.width / 4, duration: 1 })
+    .to(tony, { alpha: 1, duration: 1 }, "<")
+    .to(coin, {
+      motionPath: {
+        path: [
+          { x: coin.x, y: coin.y },
+          // { x: coin.x, y: app.screen.height * 0.6 },
+          { x: helpers.midX() - app.screen.width / 4, y: tony.y },
+          { x: tony.x - coin.width * 0.7, y: tony.y + coin.height },
+        ],
+        curviness: 2,
+      },
+      duration: 1,
+    })
+    .to(coin3, { x: tony.x, y: tony.y + coin3.height * 0.2, duration: 1 }, "<")
     .play();
 }
 
@@ -81,6 +100,16 @@ function createTable(texture, alpha = 1) {
   table.y = helpers.midY() - app.screen.height / 12;
   table.alpha = alpha;
   return table;
+}
+
+function createTony(texture) {
+  const tony = PIXI.Sprite.from(texture);
+  tony.anchor.set(0.5, 0);
+  tony.x = helpers.midX() + app.screen.width / 4;
+  tony.y = helpers.midY();
+  tony.width = tony.height = 60;
+  tony.alpha = 0;
+  return tony;
 }
 
 function createCoin(texture, alpha = 1) {
