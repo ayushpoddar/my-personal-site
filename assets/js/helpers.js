@@ -45,7 +45,7 @@ const loadApp = ({
     height: height,
     backgroundAlpha: 0,
   });
-  globalThis.__PIXI_APP__ = app;
+  if (isDevMode()) globalThis.__PIXI_APP__ = app;
   element.appendChild(app.view);
   return app;
 };
@@ -90,7 +90,7 @@ function createGsapTimeline({
   repeatDelay = 4,
 } = {}) {
   const tl = gsap.timeline({
-    repeat: -1,
+    repeat: isDevMode() ? 2 : -1,
     yoyo: true,
     repeatDelay: repeatDelay,
     onRepeat: toggleTimeScale,
