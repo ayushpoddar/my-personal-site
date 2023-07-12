@@ -109,20 +109,60 @@ that she has a balance of 10 tokens after these transactions. Now, she wants to 
 Peter. The balances will be updated for Pepper and Peter. But, we don't have a way to find whether
 the tokens received by Peter were originally transferred by Tony and Jarvis OR Happy and Joker.
 
-<!-- TODO: Animation for the above paragraph -->
-
 Essentially, the problem is: As an admin, I want to know who were the owners of each token that you
 (as a user) currenly have in your wallet. In other words, I want to keep track of each token's
 lifecycle as it changes hands.
 
 ### Solution - Your wallet's balance is the sum of all the paper money it holds
 
-#### Part I
+In one of the paragraphs above, we had discussed about paying money using paper money. What if there
+was a way to add the name of the owner to the currency bill as it changed hands. So, when Pepper
+collects a $10 bill from the bank, her name is written on the bill. Next, when Pepper transfers the
+same bill to Peter, Peter's name is added to the bill. Following this, this list will be referred as
+`owner_history` list.
 
-Instead of storing the total balance, we store the "token bills" we introduced above. When Pepper
-purchases 2 tokens in the platform, instead of updating her balance, we add a "token bill" worth 2
-tokens to her account.
+**What if Pepper wants to transfer $7 to Peter, not $10?** We split the currency bill into two
+parts: $3 and $7 ensuring that the owner list is cloned.
 
-### Technical Deep Dive
-When implementing the technical solution, we made a slight tweak to the solution discussed until
-now. Instead of storing the tokens as 
+**So, can we look at a user's wallet as a collection of "token bills" instead of just a lump sum
+balance?** Based on the discussion until now, these are the benefits that usage of "token bills"
+bring:
+- They enable tracking of each token's lifecycle that has been issued in the platform.
+- You can attach properties with each "token bill". For example:
+    - You can set expiry dates for a "token bill".
+    - If you are ever required to categorise tokens, you can attach that information to any relevant
+      "token bill".
+    - You may choose to define certain transaction pre-requisites based on the properties defined in
+      a "token bill".
+
+Essentially, representing a user's wallet as a collection of "token bills" provides immense
+flexibility. It enables you to accomodate any possible future feature requests.
+
+**What is the trade-off for this flexibility?** The queries we perform when transferring tokens
+from one user to another will be more complex. Instead of simply updating the respective balances,
+our queries will be executing the following tasks:
+- Fetch all relevant "token bills" which need to be transferred to the recipient user.
+- Split the last "token bill" in case we do not have "exact change".
+- Add the recipient user's ID to the `owner_history` list for each transferrable "token bill".
+- Update current owner of each transferred "token bill".
+
+When representing a user's wallet as a collection of "token bills", a typical payment flow would go like this:
+- Joey purchases 5 tokens from the platform.
+- He is issued a "token bill" with face value of `5`. _We will refer this "token bill" as `bill-1`._
+- His ID is added to the `owner_history` list of this "token bill".
+- He purchases 5 tokens twice (at different times) from the platform.
+- He is issued two "token bills" with face value of `5`. _`bill-2` and `bill-3`_
+- His ID is added to the `owner_history` list of these "token bills" too (`bill-2` and `bill-3`).
+- Joey wants to transfer 7 tokens to Kramer.
+- `bill-2` is split into two bills - `bill-2-1` worth 2 tokens and `bill-2-2` worth 3 tokens. The
+  `owner_history` list is cloned from `bill-2` for both the new splits.
+- `bill-1` (5 tokens) and `bill-2-1` (2 tokens) are transferred to Kramer.
+- Kramer's ID is added to the `owner_history` list of `bill-1` and `bill-2-1`
+
+The following animation shows a slightly more complex version of this where Pepper receives two
+tokens each from Tony, Jarvis, Happy, Rhodey and Joker. Then, she transfers 4 tokens to the intern -
+Peter.
+
+<!-- TODO: Animation for the above paragraph -->
+
+#### Technical Deep Dive
