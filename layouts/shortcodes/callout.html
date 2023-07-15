@@ -1,0 +1,11 @@
+<div class="callout {{ .Get `type` }}" style="">
+  {{ if (eq (.Get "type") "info") }}
+    <div>ℹ️</div>
+  {{ else if (eq (.Get "type") "warning") }}
+    <div>⚠️</div>
+  {{ end }}
+
+	<div class="callout-inner">
+    {{ .Inner }}
+  </div>
+</div>
