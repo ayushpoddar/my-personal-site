@@ -18,7 +18,9 @@ You are asked to design a internal wallet for your application where users can t
 
 For example, Harry purchases 5 tokens from your platform (app) and then transfers 3 tokens to Tony. Next, Tony transfers 2 tokens to Pepper.
 
-> For the rest of the post, we will assume that the users have the tokens that they wish to transfer. We won't be exploring the purchase of tokens.
+{{< callout type=info >}}
+For the rest of the post, we will assume that the users have the tokens that they wish to transfer. We won't be exploring the purchase of tokens.
+{{< /callout >}}
 
 ## Designing a simple token transfer system
 A simple **token** transfer system involves keeping track of each user's *token balance*. A transfer of
@@ -102,24 +104,25 @@ Essentially, the problem is: As an admin, I want to know who were the owners of 
 (as a user) currenly have in your wallet. In other words, I want to keep track of each token's
 lifecycle as it changes hands.
 
-<!-- TODO: CONTINUE READING FROM HERE! -->
-
 ### Solution - Your wallet's balance is the sum of all the paper money it holds
 
 In one of the paragraphs above, we had discussed about paying money using paper money. What if there
 was a way to add the name of the owner to the currency bill as it changed hands. So, when Pepper
 collects a $10 bill from the bank, her name is written on the bill. Next, when Pepper transfers the
-same bill to Peter, Peter's name is added to the bill. Following this, this list will be referred as
-`owner_history` list.
+same bill to Peter, Peter's name is added to the bill.
+
+{{< callout type=info >}}
+For the rest of this discussion, this list will be referred as <code>owner_history</code> list.
+{{< /callout >}}
 
 **What if Pepper wants to transfer $7 to Peter, not $10?** We split the currency bill into two
-parts: $3 and $7 ensuring that the owner list is cloned.
+parts: $3 and $7 ensuring that the `owner_history` list is cloned.
 
 **So, can we look at a user's wallet as a collection of "token bills" instead of just a lump sum
 balance?** Based on the discussion until now, these are the benefits that usage of "token bills"
 bring:
 - They enable tracking of each token's lifecycle that has been issued in the platform.
-- You can attach properties with each "token bill". For example:
+- We can attach properties with each "token bill". For example:
     - You can set expiry dates for a "token bill".
     - If you are ever required to categorise tokens, you can attach that information to any relevant
       "token bill".
@@ -142,7 +145,7 @@ When representing a user's wallet as a collection of "token bills", a typical pa
 - He is issued a "token bill" with face value of `5`. _We will refer this "token bill" as `bill-1`._
 - His ID is added to the `owner_history` list of this "token bill".
 - He purchases 5 tokens twice (at different times) from the platform.
-- He is issued two "token bills" with face value of `5`. _`bill-2` and `bill-3`_
+- He is issued two "token bills" with face value of `5` → _`bill-2` and `bill-3`_
 - His ID is added to the `owner_history` list of these "token bills" too (`bill-2` and `bill-3`).
 - Joey wants to transfer 7 tokens to Kramer.
 - `bill-2` is split into two bills - `bill-2-1` worth 2 tokens and `bill-2-2` worth 3 tokens. The
@@ -162,10 +165,12 @@ There are two technical questions that need to be addressed:
 2. How do we perform the split when we don't have _exact change_?
 
 ##### Finding the "token bills"
-Since relational databases (like MySQL, PostgreSQL) are the most widely used ones, the following
+{{< callout type="info" >}}
+Since relational databases (like MySQL, PostgreSQL) are the most widely used, the following
 discussion will be based on them.
+{{< /callout >}}
 
-The first option that comes to mind is to load all the "token bills" belonging to the sender user in
+The most intuitive option is to load all the "token bills" belonging to the sender user in
 the application. Then, we can iterate over them and save the relevant "token bills" in a separate
 list. The benefit of this approach is that your query to fetch the "token bills" from the database
 will be simple. However, it is not scalable. If a user has tens of thousands "token bills", then
@@ -177,9 +182,9 @@ functions](https://stackoverflow.com/a/22843199/6212985) to aggregate all releva
 
 This is what the query will look like _(Assuming a transaction of 10 tokens)_:
 1. Start iterating over each "token bill" row in the database. _For the sake of simplicity, we will
-   assume that the we will order the "token bills" by `id`._
+   assume that the "token bills" are ordered by `id`._
 2. For each row, calculate the running cumulative sum. Here is a simplified snippet of the query
-   _(`value` is the face value of each "token bill")_.
+   _(`value` being the face value of each "token bill")_.
 
 ```sql
 SELECT sum(value)
@@ -223,12 +228,13 @@ WHERE cumulative_sum < 10
 <!-- TODO: Animation showing cumulative sum and pre_cumulative_sum -->
 
 ##### Performing the split
-Assume that the "token bills" you fetched do not total to the exact change. Then, we need to split
+If the "token bills" fetched do not total to the exact change, we need to split
 the last "token bill" into two. One of the parts will remain with the user, and the other will be
 used for transaction.
 
 For the part that will remain with the user, you can clone the original "token bill" and insert it
-into the database with the value changed to the value of this part.
+into the database. The `value` of the new "token bill" will be equal to the number of tokens that
+should remain with the user.
 
 For the part that will be used for the transaction, we can just update the `value` of the original
 "token bill".
