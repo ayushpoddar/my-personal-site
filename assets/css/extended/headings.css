@@ -1,0 +1,35 @@
+article.post-single h2::before {
+  content: "h2";
+  font-weight: 200;
+  font-size: smaller;
+  opacity: 0.2;
+  font-style: italic;
+  padding-right: 5px;
+}
+
+article.post-single h3::before {
+  content: "h3";
+  font-weight:300;
+  font-size: smaller;
+  opacity: 0.3;
+  font-style: italic;
+  padding-right: 5px;
+}
+
+article.post-single h4::before {
+  content: "h4";
+  font-weight: 400;
+  font-size: smaller;
+  opacity: 0.4;
+  font-style: italic;
+  padding-right: 5px;
+}
+
+article.post-single h5::before {
+  content: "h5";
+  font-weight: 500;
+  font-size: smaller;
+  opacity: 0.5;
+  font-style: italic;
+  padding-right: 5px;
+}
