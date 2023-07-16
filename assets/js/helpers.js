@@ -104,6 +104,17 @@ function createGsapTimeline({
   return tl.delay(delay).timeScale(initialTimeScale);
 }
 
+function resizeSprite(sprite, { width, height }) {
+  const aspectRatio = sprite.width / sprite.height;
+  if (width) {
+    sprite.width = width;
+    sprite.height = width / aspectRatio;
+  } else {
+    sprite.height = height;
+    sprite.width = height * aspectRatio;
+  }
+}
+
 export default {
   isDevMode,
   startAnimationOnView,
@@ -114,4 +125,5 @@ export default {
   midX,
   midY,
   createGsapTimeline,
+  resizeSprite,
 };
