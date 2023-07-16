@@ -248,7 +248,13 @@ INSERT INTO token_bills (user_id, value) VALUES (:sender_id, 3);
 UPDATE token_bills SET value=3 WHERE id=:original_token_bill_id;
 ```
 
-<!-- TODO: ADD A CONCLUSION -->
+## Conclusion
+We started with a simple solution of just storing the balances, but we soon found it to be
+inflexible and unable to accomodate any possible feature requests.
+
+Modeling our wallet as a collection of "token bills" helped us break down a complex problem into
+smaller, manageable problems. Additionally, it prepared our system for the future, ensuring we
+could readily accommodate any potential feature requests that might arise.
 
 ## Footnotes
 
