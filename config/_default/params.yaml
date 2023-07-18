@@ -9,7 +9,6 @@ ShowBreadCrumbs: true
 ShowCodeCopyButtons: true
 ShowToc: true
 showLastUpdated: true
-enableAnimation: false
 
 description: "Ayush Poddar - Software Engineer from India. Rubyist. This is my web home."
 
