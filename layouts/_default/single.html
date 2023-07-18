@@ -54,4 +54,8 @@
   {{- end }}
 </article>
 
+{{ if .Param "enableAnimation" }}
+  {{ partial "pixigsap.html" . }}
+{{ end }}
+
 {{- end }}{{/* end main */}}
