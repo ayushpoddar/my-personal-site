@@ -5,8 +5,8 @@ date: 2023-07-19T01:03:54+05:30
 author: 'Ayush Poddar'
 tags: ["programming"]
 keywords: ["wallet", "payments", "sql", "window functions", "paper money"]
-description: "Have you ever used cash to pay for something? You can use the age old model of cash
-transactions to build a trackable and future-ready payment wallet."
+description: "Have you ever used cash to pay for something? Learn how the age old model of cash transactions
+can help you build a trackable and future-ready payment wallet."
 summary: "How real paper money can help you build a trackable and flexible payment wallet?"
 showReadingTime: true
 hideComments: true
