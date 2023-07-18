@@ -136,7 +136,7 @@
     });
 </script>
 
-{{ if (.Params.enableAnimation) }}
+{{ if .Param "enableAnimation" }}
   {{ partial "pixigsap.html" }}
 {{ end }}
 {{- end }}
