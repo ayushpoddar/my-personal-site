@@ -29,7 +29,7 @@
   {{ .Content }}
   </div>
     {{ if (.Params.mermaid) }}
-      {{ partial "mermaid.html" }}
+      {{ partial "mermaid.html" . }}
     {{ end }}
   {{- end }}
 
