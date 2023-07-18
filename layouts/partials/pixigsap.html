@@ -1,4 +1,3 @@
-{{ $shims := dict "pixi" "node_modules/pixi/index.js" "gsap" "node_modules/gsap/index.js"
-"gsapMotionPathPlugin" "node_modules/gsap/dist/MotionPathPlugin.js" }}
+{{ $shims := dict "pixi" "node_modules/pixi/index.js" "gsap" "node_modules/gsap/index.js" }}
 {{ $loadingJS := (resources.Get "js/load-pixi-gsap.js") | js.Build (dict "shims" $shims) }}
 <script type="text/javascript" src="{{ $loadingJS.RelPermalink }}"></script>

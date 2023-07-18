@@ -78,15 +78,8 @@ function startAnimation() {
     .to(table2, { x: helpers.midX() - app.screen.width / 4, duration: 1 })
     .to(tony, { alpha: 1, duration: 1 }, "<")
     .to(coin, {
-      motionPath: {
-        path: [
-          { x: coin.x, y: coin.y },
-          // { x: coin.x, y: app.screen.height * 0.6 },
-          { x: helpers.midX() - app.screen.width / 4, y: tony.y },
-          { x: tony.x - coin.width * 0.7, y: tony.y + coin.height },
-        ],
-        curviness: 2,
-      },
+      x: tony.x - coin.width * 0.7,
+      y: tony.y + coin.height,
       duration: 1,
     })
     .to(coin3, { x: tony.x, y: tony.y + coin3.height * 0.2, duration: 1 }, "<")
