@@ -1,5 +1,5 @@
 ---
-slug: "internal-wallet-using-currency-bills"
+slug: "payment-wallet-using-currency-bills"
 title: "Want to build a trackable and flexible payment wallet? The wallet in your pocket can help!"
 date: 2023-07-19T01:03:54+05:30
 author: 'Ayush Poddar'
