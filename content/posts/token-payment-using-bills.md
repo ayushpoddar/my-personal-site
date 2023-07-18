@@ -16,6 +16,11 @@ draft: true
 startDate: 2023-06-28T08:56:31+05:30
 ---
 
+{{< callout type=note >}}
+This post is written in the form of a guide. But, it is inspired from my experience of building a
+similar payment wallet for <a href="https://www.scriptdoor.com">ScriptDoor</a>.
+{{< /callout >}}
+
 You are asked to design a internal wallet for your application where users can transfer "token money" (also called **tokens**) to each other. They can purchase the tokens by making a credit card payment, and then transfer those tokens to each other.
 
 For example, Harry purchases 5 tokens from your platform (app) and then transfers 3 tokens to Tony. Next, Tony transfers 2 tokens to Pepper.
@@ -225,8 +230,6 @@ FROM (SELECT *,
 WHERE cumulative_sum < 10
     OR (cumulative_sum >= 10 AND (pre_cumulative_sum < 10 OR pre_cumulative_sum IS NULL))
 ```
-
-<!-- TODO: Animation showing cumulative sum and pre_cumulative_sum -->
 
 ##### Performing the split
 If the "token bills" fetched do not total to the exact change, we need to split
