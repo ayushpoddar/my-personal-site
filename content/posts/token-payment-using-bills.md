@@ -154,10 +154,9 @@ When representing a user's wallet as a collection of "token bills", a typical pa
 - Kramer's ID is added to the `owner_history` list of `bill-1` and `bill-2-1`
 
 The following animation shows a slightly more complex version of this where Pepper receives two
-tokens each from Tony, Jarvis, Happy, Rhodey and Joker. Then, she transfers 4 tokens to the intern -
-Peter.
+tokens each from Rhodey and Joker. Then, she transfers 2 tokens to the intern - Peter.
 
-<!-- TODO: Animation for the above paragraph -->
+{{< pixigsap "transfer-token-notes.js" >}}
 
 #### Technical Deep Dive
 There are two technical questions that need to be addressed:
