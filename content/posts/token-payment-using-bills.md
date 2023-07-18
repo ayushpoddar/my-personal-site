@@ -1,17 +1,19 @@
 ---
-slug: "token-payment-using-bills"
-title: "TBD"
-date: 2023-06-28T08:56:31+05:30
+slug: "internal-wallet-using-currency-bills"
+title: "Want to build a trackable and flexible payment wallet? The wallet in your pocket can help!"
+date: 2023-07-19T01:03:54+05:30
 author: 'Ayush Poddar'
 tags: ["programming"]
-keywords: ["programming"]
-description: "Design a token payment system"
-summary: "How we implemented a fully trackable payment system"
+keywords: ["wallet", "payments", "sql", "window functions", "paper money"]
+description: "Have you ever used cash to pay for something? You can use the age old model of cash
+transactions to build a trackable and future-ready payment wallet."
+summary: "How real paper money can help you build a trackable and flexible payment wallet?"
 showReadingTime: true
 hideComments: true
 enableAnimation: true
 mermaid: false
 draft: true
+startDate: 2023-06-28T08:56:31+05:30
 ---
 
 You are asked to design a internal wallet for your application where users can transfer "token money" (also called **tokens**) to each other. They can purchase the tokens by making a credit card payment, and then transfer those tokens to each other.
