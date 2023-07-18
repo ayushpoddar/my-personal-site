@@ -14,6 +14,10 @@
   background: #EDE7E5;
 }
 
+.callout.note {
+  background: #DDE9F1;
+}
+
 .callout-inner {
   margin-left: 1em;
 }
