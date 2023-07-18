@@ -35,6 +35,6 @@ module:
     - source: node_modules/pixi.js/lib/
       target: assets/node_modules/pixi/
     - source: node_modules/gsap/
-      target: assets/node_modules/gsap
+      target: assets/node_modules/gsap/
     - source: assets
       target: assets
