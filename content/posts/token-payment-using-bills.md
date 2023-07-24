@@ -265,3 +265,6 @@ could readily accommodate any potential feature requests that might arise.
 [^1]: The conditions are not essential to the idea behind the post. They can be as crazy as - *the
 transfers take place in the first week of the month.*
 
+## Credits
+Shout out to [@samwhoo](https://twitter.com/samwhoo) for helping me with the animations. Check out this
+visual blogs on [samwho.dev](https://samwho.dev).
