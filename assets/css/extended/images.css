@@ -1,0 +1,8 @@
+figure img {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+figure figcaption p {
+  text-align: center !important;
+}

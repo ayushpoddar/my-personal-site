@@ -9,6 +9,7 @@ description = "Ruby 3.2.0 is now optimized to take advantage of object shapes. W
 summary = "Discover how object shapes in Ruby 3.2.0 will enhance performance."
 ShowReadingTime = true
 hideComments = true
+enableAnimation = false
 draft = false
 mermaid = true
 +++

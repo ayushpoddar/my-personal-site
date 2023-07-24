@@ -1,2 +1,8 @@
-<script src="https://cdn.jsdelivr.net/npm/pixi.js@7.2.4/dist/pixi.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+{{ if eq hugo.Environment "development" }}
+  {{ $shims := dict "pixi" "node_modules/pixi/index.js" "gsap" "node_modules/gsap/index.js" }}
+  {{ $loadingJS := (resources.Get "js/load-pixi-gsap.js") | js.Build (dict "shims" $shims) }}
+  <script type="text/javascript" src="{{ $loadingJS.RelPermalink }}"></script>
+{{ else }}
+  <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.2.4/dist/pixi.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+{{ end }}

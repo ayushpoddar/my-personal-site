@@ -1,0 +1,12 @@
+{
+ "compilerOptions": {
+  "baseUrl": ".",
+  "paths": {
+   "*": [
+    "*",
+    "../node_modules/gsap/*",
+    "../node_modules/pixi.js/lib/*"
+   ]
+  }
+ }
+}

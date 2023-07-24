@@ -6,14 +6,6 @@
     <span> built with ♥ from charlola
     {{- end }}
     | Icons by <a target="_blank" href="https://icons8.com">Icons8</a>
-      <!--
-    <div><span> <a href="{{ "" | absLangURL }}">{{ .Site.Title }}</a> </span></div>
-    <span>
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
-    </span>
--->
 </footer>
 {{- end }}
 
@@ -24,7 +16,6 @@
     </svg>
 </a>
 {{- end }}
-
 
 <script>
     let menu = document.getElementById('menu')
@@ -53,7 +44,6 @@
             }
         });
     });
-
 </script>
 
 {{- if (not .Site.Params.disableScrollToTop) }}
@@ -135,10 +125,4 @@
         }
     });
 </script>
-
-<!-- Load pixiJS and GSAP scripts -->
-{{ if (.Params.containsAnimation) }}
-  {{ partial "pixigsap.html" }}
-{{ end }}
-
 {{- end }}

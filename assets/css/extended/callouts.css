@@ -1,0 +1,31 @@
+.callout {
+  padding: 1.5em 1.25em;
+  border-radius: 9px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.callout.info {
+  background: #DFE6F3;
+}
+
+.callout.warning {
+  background: #EDE7E5;
+}
+
+.callout.note {
+  background: #DDE9F1;
+}
+
+.callout-inner {
+  margin-left: 1em;
+}
+@media (max-width: 767px) {
+  .callout {
+  padding: 1.5em 0.75em 1.5em 0.6em;
+  }
+  .callout-inner {
+    margin-left: 0.5em;
+  }
+}

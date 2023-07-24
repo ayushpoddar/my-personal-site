@@ -1,7 +1,7 @@
 author: Ayush Poddar
 
-defaultTheme: auto
-# disableThemeToggle: true
+defaultTheme: light
+disableThemeToggle: true
 ShowShareButtons: false
 ShowReadingTime: true
 displayFullLangName: true

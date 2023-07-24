@@ -29,7 +29,7 @@
   {{ .Content }}
   </div>
     {{ if (.Params.mermaid) }}
-      {{ partial "mermaid.html" }}
+      {{ partial "mermaid.html" . }}
     {{ end }}
   {{- end }}
 
@@ -53,5 +53,9 @@
   {{- partial "comments.html" . }}
   {{- end }}
 </article>
+
+{{ if .Param "enableAnimation" }}
+  {{ partial "pixigsap.html" . }}
+{{ end }}
 
 {{- end }}{{/* end main */}}
