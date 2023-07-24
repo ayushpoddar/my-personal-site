@@ -6,7 +6,7 @@ author: 'Ayush Poddar'
 tags: ["programming"]
 keywords: ["wallet", "payments", "sql", "window functions", "paper money"]
 description: "Have you ever used cash to pay for something? Learn how the age old model of cash transactions
-can help you build a trackable and future-ready payment wallet."
+can help you build a trackable and future-ready payment wallet app."
 summary: "How real paper money can help you build a trackable and flexible payment wallet?"
 showReadingTime: true
 hideComments: true
@@ -161,7 +161,7 @@ When representing a user's wallet as a collection of "token bills", a typical pa
 - Kramer's ID is added to the `owner_history` list of `bill-1` and `bill-2-1`
 
 The following animation shows a slightly more complex version of this where Pepper receives two
-tokens each from Rhodey and Joker. Then, she transfers 2 tokens to the intern - Peter.
+tokens each from Rhodey and Joker. Then, she transfers 2 tokens to Peter.
 
 {{< pixigsap "transfer-token-notes.js" >}}
 
