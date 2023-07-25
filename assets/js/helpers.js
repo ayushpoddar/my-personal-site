@@ -43,8 +43,9 @@ const loadApp = ({
     width: width,
     height: height,
     backgroundAlpha: 0,
+    resolution: window.devicePixelRatio,
   });
-  if (isDevMode()) globalThis.__PIXI_APP__ = app;
+  globalThis.__PIXI_APP__ = app;
   return app;
 };
 
