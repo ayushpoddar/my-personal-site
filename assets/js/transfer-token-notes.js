@@ -213,6 +213,10 @@ function createTableRow(texture, pos = 1) {
   return row;
 }
 
-init().then((_) => {
-  helpers.startAnimationOnView(element, runAnimation);
-});
+init()
+  .then(() => {
+    helpers.appendApp(element, app);
+  })
+  .then((_) => {
+    helpers.startAnimationOnView(element, runAnimation);
+  });

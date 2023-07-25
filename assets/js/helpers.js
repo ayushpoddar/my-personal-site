@@ -36,7 +36,6 @@ const startAnimationOnView = (element, callback) => {
 };
 
 const loadApp = ({
-  element,
   width = config.canvasWidth,
   height = config.canvasHeight,
 } = {}) => {
@@ -46,9 +45,35 @@ const loadApp = ({
     backgroundAlpha: 0,
   });
   if (isDevMode()) globalThis.__PIXI_APP__ = app;
-  element.appendChild(app.view);
   return app;
 };
+
+function appendApp(element, app) {
+  const loadingEle = element.querySelector(".loader");
+  console.log(loadingEle);
+  gsap.to(loadingEle, {
+    alpha: 0,
+    duration: 1,
+    onComplete: () => {
+      loadingEle.classList.add("hidden");
+      element.appendChild(app.view);
+      animateApp(app.view);
+    },
+  });
+
+  function animateApp(appCanvas) {
+    gsap.fromTo(
+      appCanvas,
+      {
+        alpha: 0,
+      },
+      {
+        alpha: 1,
+        duration: 0.3,
+      }
+    );
+  }
+}
 
 function assetPath(assetName) {
   if (isDevMode()) {
@@ -126,4 +151,5 @@ export default {
   midY,
   createGsapTimeline,
   resizeSprite,
+  appendApp,
 };
