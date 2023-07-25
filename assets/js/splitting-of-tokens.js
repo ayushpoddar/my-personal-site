@@ -117,6 +117,10 @@ function createCoin(texture, alpha = 1) {
   return container;
 }
 
-init().then((_) => {
-  helpers.startAnimationOnView(element, startAnimation);
-});
+init()
+  .then(() => {
+    helpers.appendApp(element, app);
+  })
+  .then((_) => {
+    helpers.startAnimationOnView(element, startAnimation);
+  });

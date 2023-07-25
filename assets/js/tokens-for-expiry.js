@@ -162,6 +162,10 @@ const createCellBgTexture = helpers.memoizer((width, height) => {
   return app.renderer.generateTexture(border);
 });
 
-init().then((_) => {
-  helpers.startAnimationOnView(element, startAnimation);
-});
+init()
+  .then(() => {
+    helpers.appendApp(element, app);
+  })
+  .then((_) => {
+    helpers.startAnimationOnView(element, startAnimation);
+  });

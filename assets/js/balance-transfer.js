@@ -17,7 +17,7 @@ let aliceBalance = initialAliceBalance;
 let bobBalance = initialBobBalance;
 let alice, aliceBalanceText, bob, bobBalanceText, coin;
 
-let app = helpers.loadApp({ element: element });
+let app = helpers.loadApp();
 
 async function init() {
   const bobTexture = await PIXI.Assets.load(helpers.assetPath("alice.png"));
@@ -127,6 +127,10 @@ function transferCoins() {
   tl.play();
 }
 
-init().then(() => {
-  helpers.startAnimationOnView(element, transferCoins);
-});
+init()
+  .then(() => {
+    helpers.appendApp(element, app);
+  })
+  .then(() => {
+    helpers.startAnimationOnView(element, transferCoins);
+  });
