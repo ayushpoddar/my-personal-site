@@ -137,7 +137,7 @@ bring:
       a "token bill".
 
 Essentially, representing a user's wallet as a collection of "token bills" provides immense
-flexibility. It enables you to accomodate any possible future feature requests.
+flexibility. It enables you to accommodate any possible future feature requests.
 
 **What is the trade-off for this flexibility?** The queries we perform when transferring tokens
 from one user to another will be more complex. Instead of simply updating the respective balances,
