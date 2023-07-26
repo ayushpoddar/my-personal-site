@@ -22,6 +22,11 @@
 </div>
 {{- end }}
 
+{{- if eq .Page.RelPermalink "/shorts/" }}
+  <p style="margin-bottom: var(--content-gap); text-align: justify">
+    📝 A series of posts, where each post is hyper-focused on a single concept and should take less than 1 minute to read.
+  </p>
+{{ end }}
 
 
 {{- $pages := union .RegularPages .Sections }}
