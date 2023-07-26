@@ -16,8 +16,7 @@ draft: true
 ---
 
 {{< callout type=note >}}
-This post is part of my <a href="/shorts">"Shorts"</a> series. Each post in this series is
-hyper-focused on a single concept and should take less than 1 minute to read.
+    {{% shorts-intro-single %}}
 {{< /callout >}}
 
 ## Further exploration
