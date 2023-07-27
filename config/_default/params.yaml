@@ -31,8 +31,8 @@ socialIcons:
     url: "https://github.com/ayushpoddar"
   - name: linkedin
     url: "https://www.linkedin.com/in/ayushp/"
-  - name: toptal
-    url: "https://www.toptal.com/resume/ayush-poddar"
+  - name: email
+    url: "mailto:ayush.mail.id@gmail.com"
 
   # add more social icons. find more in svg.html file
   # - name: youtube
