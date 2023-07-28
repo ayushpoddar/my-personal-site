@@ -3,7 +3,7 @@ slug: "locally-ignore-files-in-git"
 title: "How to ignore files in git? Without changing gitignore"
 date: 2023-07-26T09:59:47+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming']
+tags: ['shorts', 'programming', 'git']
 keywords: ['git', 'gitignore']
 description: Learn how to maintain a list of files to ignore locally in git and keep your workflow-specific files to yourself.
 summary:
