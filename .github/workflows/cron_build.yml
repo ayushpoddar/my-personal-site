@@ -1,0 +1,16 @@
+name: Cron build at 10AM IST
+ 
+on:
+  schedule:
+    - cron: "30 4 * * *"
+    - cron: "0 5 * * *" # Fallback cron
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the build webhook on Cloudflare
+        run: |
+          curl -f -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${TOKEN}"
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_BUILD_HOOK }}
