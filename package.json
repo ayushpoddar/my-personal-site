@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "hugo server --gc --disableFastRender -D --verbose --ignoreCache",
+    "dev": "hugo server --gc --disableFastRender -D --verbose --ignoreCache --buildFuture",
     "build": "hugo --gc --cleanDestinationDir --minify"
   },
   "repository": {
