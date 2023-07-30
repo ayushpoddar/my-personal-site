@@ -16,7 +16,7 @@ draft: false
 ---
 
 {{< callout type=note >}}
-    {{% shorts-intro-single %}}
+{{% shorts-intro-single %}}
 {{< /callout >}}
 
 You might have a situation where you create some files in a git repository that is specific to your

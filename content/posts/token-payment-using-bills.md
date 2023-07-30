@@ -18,7 +18,7 @@ startDate: 2023-06-28T08:56:31+05:30
 
 {{< callout type=note >}}
 This post is written in the form of a guide. But, it is inspired from my experience of building a
-similar payment wallet for <a href="https://www.scriptdoor.com">ScriptDoor</a>.
+similar payment wallet for [Scriptdoor](https://www.scriptdoor.com).
 {{< /callout >}}
 
 You are asked to design a internal wallet for your application where users can transfer "token money" (also called **tokens**) to each other. They can purchase the tokens by making a credit card payment, and then transfer those tokens to each other.
@@ -119,7 +119,7 @@ collects a $10 bill from the bank, her name is written on the bill. Next, when P
 same bill to Peter, Peter's name is added to the bill.
 
 {{< callout type=info >}}
-For the rest of this discussion, this list will be referred as <code>owner_history</code> list.
+For the rest of this discussion, this list will be referred as `owner_history` list.
 {{< /callout >}}
 
 **What if Pepper wants to transfer $7 to Peter, not $10?** We split the currency bill into two
