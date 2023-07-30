@@ -16,7 +16,7 @@ draft: false
 ---
 
 {{< callout type=note >}}
-    {{% shorts-intro-single %}}
+{{% shorts-intro-single %}}
 {{< /callout >}}
 
 In an [earlier post]({{% relref "git-rebase-intro.md" %}}), I introduced you to the powerful

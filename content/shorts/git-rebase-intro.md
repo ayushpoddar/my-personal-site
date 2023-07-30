@@ -16,7 +16,7 @@ draft: false
 ---
 
 {{< callout type=note >}}
-    {{% shorts-intro-single %}}
+{{% shorts-intro-single %}}
 {{< /callout >}}
 
 If you have ever worked in a software development team, you must have faced a situation where a bug

@@ -16,7 +16,7 @@ draft: false
 ---
 
 {{< callout type=note >}}
-    {{% shorts-intro-single %}}
+{{% shorts-intro-single %}}
 {{< /callout >}}
 
 In the [previous post]({{% relref "locally-ignore-files-in-git.md" %}}), I mentioned that you can use `.git/info/exclude` file as your personal local `.gitignore`. However, it only works on files that are untracked, i.e., which have never been tracked using `git add`.

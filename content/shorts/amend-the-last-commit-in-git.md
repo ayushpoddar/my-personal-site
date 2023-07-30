@@ -16,7 +16,7 @@ draft: false
 ---
 
 {{< callout type=note >}}
-    {{% shorts-intro-single %}}
+{{% shorts-intro-single %}}
 {{< /callout >}}
 
 If you've ever used Git for version control, you may have come across a situation where you realise
