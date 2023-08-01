@@ -40,7 +40,7 @@ branched off the `main` branch, as shown below:
 
 {{< figure src="/images/rebase-onto-2.png" width="450">}}
 
-The `--onto` flag will help you to change the base of `featureB` branch to `featureA` to `main`. The
+The `--onto` flag will help you to change the base of `featureB` branch from `featureA` to `main`. The
 command that you need to use will be:
 
 ```sh
