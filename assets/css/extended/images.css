@@ -1,8 +1,14 @@
 figure img {
   margin-left: auto !important;
   margin-right: auto !important;
+  margin-bottom: 0.5rem !important;
+}
+
+figure figcaption {
+  margin-top: 0 !important;
 }
 
 figure figcaption p {
   text-align: center !important;
+  font-style: italic;
 }
