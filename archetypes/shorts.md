@@ -6,7 +6,6 @@ author: 'Ayush Poddar'
 tags: ['shorts']
 keywords:
 description:
-summary:
 showToc: false
 showReadingTime: true
 hideComments: true
