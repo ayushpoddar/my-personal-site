@@ -17,7 +17,7 @@ draft: false
 
 If you've ever used Git, you must be aware of the command to configure Git:
 
-```shell
+```bash
 git config
 ```
 
@@ -29,20 +29,20 @@ Any Git configuration is basically a key-value pair. For example, to configure t
 should be attached to every commit you make you need to configure the key: `user.name`. You would configure
 its value using the following command.
 
-```shell
+```bash
 # Setting user.name to "Alan Turing"
 git config user.name "Alan Turing"
 ```
 
 If you want to read the currently set value for a key, you can use the following command:
 
-```shell
+```bash
 git config <key>
 ```
 
 In the case of reading the value for `user.name`, we enter the following command into the shell:
 
-```shell
+```bash
 git config user.name
 #=> Output: Alan Turing
 ```
@@ -80,14 +80,14 @@ To set a configuration at a particular level, you can use the flags `--system`, 
 to set `user.name` to `"Alan Turing"` for every repository in your system, you can use the following
 command:
 
-```shell
+```bash
 git config --global user.name "Alan Turing"
 ```
 
 If you don't use a flag when setting a configuration, by default Git will set it at the local
 (repository) level, i.e., the following two commands are equivalent:
 
-```shell
+```bash
 # These two commands have the same effect,
 # when your working directory is a git repository
 git config user.name "Alan Turing"
@@ -99,7 +99,7 @@ In order to read the value of a configuration set a particular level, you can sp
 using one of the three flags: `--system`, `--global` or `--local`. For example, to read the value of
 `user.name` at the global level, you can use the following command:
 
-```shell
+```bash
 git config --global user.name
 #=> Output: Alan Turing
 ```
@@ -116,7 +116,7 @@ the global level, Git will prefer the local configuration.
 
 The following example demonstrates the discussion on reading a configuration:
 
-```shell
+```bash
 git config --global user.name "Alan Turing"
 git config --local user.name "Donald Knuth"
 git config user.name  # Will prefer the local configuration
@@ -134,7 +134,7 @@ be deleted.
 Not specifying the configuration level will default to deleting the configuration from the local
 level. Command:
 
-```shell
+```bash
 # Delete user.name from global configuration
 git config --global --unset user.name
 
@@ -154,7 +154,7 @@ same configuration key set to different values at two different levels.
 
 Command to list all the configurations:
 
-```shell
+```bash
 # List all configurations
 git config --list
 
@@ -167,7 +167,7 @@ When reading a configuration value, you may be interested to know whether the va
 local level or the global level or the system level. To do this, use the `--show-origin` flag. For
 example:
 
-```shell
+```bash
 git config --show-origin user.name
 #=> Output: file:/Users/alanturing/.gitconfig   Alan Turing
 ```
@@ -175,7 +175,7 @@ git config --show-origin user.name
 When used with the `--list` flag, you can get the file where each configuration is stored in the
 list of configurations.
 
-```shell
+```bash
 git config --show-origin --list
 ```
 
@@ -193,7 +193,7 @@ git config --show-origin --global --list
 Instead of setting configuration one key at a time, you can also open up the editor and directly
 edit one of the configuration files. Command:
 
-```shell
+```bash
 # Edit the global configuration
 git config --global --edit
 
