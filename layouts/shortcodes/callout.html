@@ -5,6 +5,8 @@
 <div>⚠️</div>
 {{ else if (eq (.Get "type") "note") }}
 <div>📝</div>
+{{ else if (eq (.Get "type") "tip") }}
+<div>💡</div>
 {{ end }}
 
 <div class="callout-inner">

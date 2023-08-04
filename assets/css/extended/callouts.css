@@ -18,6 +18,11 @@
   background: #DDE9F1;
 }
 
+.callout.tip {
+  /* background: #F5F8FA; */
+  background: #e7eede;
+}
+
 .callout-inner {
   margin-left: 1em;
 }
