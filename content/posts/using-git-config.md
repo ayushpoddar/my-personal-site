@@ -1,7 +1,7 @@
 ---
 slug: "using-git-config"
 title: "Getting started with git-config"
-date: 2023-08-05T09:36:11+05:30
+date: 2023-08-05T01:16:11+05:30
 author: 'Ayush Poddar'
 tags: ['shorts', 'git', 'programming']
 keywords: ['git', 'configuration', 'git config']
