@@ -3,11 +3,11 @@ slug: "using-git-config"
 title: "Getting started with git-config"
 date: 2023-08-05T01:16:11+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'git', 'programming']
+tags: ['git', 'programming']
 keywords: ['git', 'configuration', 'git config']
 description: "How does Git manage configurations? What are the CLI flags provided by git-config to
 help you manage your configurations?"
-showToc: false
+showToc: true
 showReadingTime: true
 hideComments: true
 enableAnimation: false
