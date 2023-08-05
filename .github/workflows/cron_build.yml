@@ -12,5 +12,7 @@ jobs:
       - name: Trigger the build webhook on Cloudflare
         run: |
           curl -f -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/${TOKEN}"
+          curl -d "Post is live" "ntfy.sh/${TOPIC}"
         env:
           TOKEN: ${{ secrets.CLOUDFLARE_BUILD_HOOK }}
+          TOPIC: ${{ secrets.NTFY_TOPIC }}
