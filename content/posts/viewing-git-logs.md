@@ -28,7 +28,7 @@ Using the `--patch` (or `-p`) command line flag with `git log` displays the chan
 commit. The sample output of the command `git log -p` is shown below. _Notice the details of changes
 shown under each commit._
 
-```bash
+```diff
 commit 1062877fc12c3b3d54ca17f539abc71ccb3cc324
 Author: Ayush Poddar <ayush.mail.id@gmail.com>
 Date:   Wed Aug 9 09:47:20 2023 +0530
@@ -74,7 +74,7 @@ get the stats associated with each commit, i.e., view the number of lines added/
 commit. The `--stat` flag with `git log` will help you achieve this. Sample output of the command
 `git log --stat` is shown below.
 
-```bash
+```diff
 commit 1062877fc12c3b3d54ca17f539abc71ccb3cc324
 Author: Ayush Poddar <ayush.mail.id@gmail.com>
 Date:   Wed Aug 9 09:47:20 2023 +0530
@@ -103,7 +103,7 @@ flag takes in a value which determines the format of the output.
 The value `oneline` prints each commit in a single line. Sample output of `git log --pretty=oneline` is
 given below.
 
-```bash
+```diff
 1062877fc12c3b3d54ca17f539abc71ccb3cc324 some change
 596cb31a2d6e961ebc1fd413a384c342e19543f5 Update bat.md
 ```
@@ -119,7 +119,7 @@ You can also customise your log output as per your custom requirements by passin
 to the `--pretty` flag. The sample output of the command `git log --pretty=format:"%h - %an, %ar :
 %s"` is shown below.
 
-```bash
+```diff
 1062877 - Ayush Poddar, 31 hours ago : some change
 596cb31 - Ayush Poddar, 2 weeks ago : Update bat.md
 ```
@@ -150,7 +150,7 @@ useful when used with `--pretty=oneline` option. I encourage you to try this out
 values for `--pretty` to know why I have written so. The sample output of `git log --graph --pretty=oneline`
 is shown below.
 
-```bash
+```diff
 * 305e2486f4431fc7e0487423f90ed380852194b2 refactor: split into two methods
 * 6f7f4ab47d0a1d8fdf86fcf9b6f27fde34f1ef1e modify the instance doubles ensuring green specs
 * fe59bb7c5f7f2b69e11902dda063f5ab487e57c7 add logic to show different color for hidden files/directories
