@@ -28,11 +28,11 @@ Essentially, log of all the commits is generally useless to us. We, often, only 
 the log to find an answer to our questions. In this post, I will introduce you to some of the
 options supported by `git log` that helps us limit the number of commits that are displayed.
 
-## Show the last n commits
+## View the last n commits
 You can use `git log -<n>`, where `n` is any integer to show the last n commits. For example,
 running `git log -3` will return the last 3 commits in the log.
 
-## Show the commits made since X date
+## View the commits made since X date
 You can use `git log --since=<date>`, where `date` is either a specific date (like `2023-06-22` in
 **YYYY-MM-DD** format) or a relative date (like `"2 days 1 hour ago"`) to show all the commits made since a certain date.
 For example, running `git log --since="2 days ago"` will return all the commits made in the last 2 days.
@@ -41,7 +41,7 @@ For example, running `git log --since="2 days ago"` will return all the commits 
 I encourage you to explore `man git-log` to learn about other formats supported by the `--since` flag.
 {{< /callout >}}
 
-## Show the commits whose patch contains X string
+## View the commits whose patch contains X string
 Often times, you need to search for a commit whose patch contains a certain string. For instance, you may be
 want to know which commit changed the API error message in your code.
 
