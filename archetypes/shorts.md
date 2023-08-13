@@ -21,6 +21,6 @@ draft: false
 ## Further exploration
 You can use the following resources to explore further on this topic:
 
-## Sources
+## References
 _Some of the links listed here are affiliate links, i.e., if you purchase something using the link
 provided, I will earn a small commission. I have labeled affiliate links as such._
