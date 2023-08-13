@@ -15,10 +15,6 @@ mermaid: false
 draft: false
 ---
 
-{{< callout type=note >}}
-{{% shorts-intro-single %}}
-{{< /callout >}}
-
 If you have read my post on [the history of Git]({{< relref "history-of-git.md" >}}), you
 would know that in order to have effective collaboration, we need to have a
 [version database]({{< relref "shorts/git-storage-of-versions.md" >}}) that is accessible to everyone on
