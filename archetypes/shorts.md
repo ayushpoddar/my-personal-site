@@ -3,7 +3,7 @@ slug: "{{ .Name }}"
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
 author: 'Ayush Poddar'
-tags: ['shorts']
+tags: []
 keywords:
 description:
 showToc: false
