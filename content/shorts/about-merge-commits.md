@@ -24,7 +24,7 @@ every time you merge, but only on some special scenarios. In this post, we will 
 commits and when are they created. At the end of the post, I will also provide a way to avoid them.
 
 ## First, the simple fast-forward merge
-Consider that you have a branch named `featureX` which diverges from the `main` branch like shown
+Consider that you have a branch named `featureX` which diverges from the `main` branch as shown
 below.
 
 {{< figure src="/images/fast-forward-merge.png" width="600" >}}
@@ -45,15 +45,15 @@ I have used the `main` branch as an example. I don't mean to convey that merges 
 the `main` branch. Any Git branch can be merged into any Git branch.
 {{< /callout >}}
 
-## When main branch is NOT an ancestor of your feature branch
+## When the main branch is NOT an ancestor of your feature branch
 Consider the scenario below where the `main` branch has moved ahead from the point where `featureX` diverged.
 
 {{< figure src="/images/three-way-merge-1.png" width="600" >}}
 
 In this case, the commit pointed to by `main` is not an ancestor of the `featureX` branch. So, Git
-tries to find the common ancestor of `main` and `featureX`. Then, Git performs a three-way merge
+tries to find the common ancestor of the `main` and `featureX`. Then, Git performs a three-way merge
 between the common ancestor commit, the commit pointed to by `main`, and the commit pointed to by
-`featureX`. It creates a new snapshot that results from this merge, and creates a "merge commit" on
+`featureX`. It creates a new snapshot that results from this merge and creates a "merge commit" on
 the `main` branch _(or the branch being merged into)_.
 
 {{< figure src="/images/three-way-merge-2.png" width="600" >}}
@@ -63,7 +63,7 @@ A merge commit has more than one parent.
 {{< /callout >}}
 
 ## Avoiding merge commits
-To avoid merge commits, you can rebase the `featureX` branch on the `main` branch. After the rebase, the commit pointed to by `main` will become an ancestor of `featureX`. In order to learn more about rebasing, I suggest you to read my [post introducing git rebase]({{< relref "shorts/git-rebase-intro.md" >}}).
+To avoid "merge commits", you can rebase the `featureX` branch on the `main` branch. After the rebase, the commit pointed to by `main` will become an ancestor of `featureX`. To learn more about rebasing, I suggest you read my [post introducing git-rebase]({{< relref "shorts/git-rebase-intro.md" >}}).
 
 ## References
 - [https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
