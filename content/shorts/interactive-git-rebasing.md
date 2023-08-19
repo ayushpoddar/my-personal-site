@@ -3,7 +3,7 @@ slug: "interactive-git-rebasing"
 title: "Interactive Git Rebasing"
 date: 2023-07-31T09:30:54+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'git-rebase', 'interactive']
 description: Rebase your git branch with more control using the interactive mode
 summary:

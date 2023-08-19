@@ -3,7 +3,7 @@ slug: "git-rebase-possibilities"
 title: "Can you rebase on just the main branch? No."
 date: 2023-07-30T10:06:51+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'rebase']
 description: "Your feature branch can be rebased on anything, not only a branch"
 summary:

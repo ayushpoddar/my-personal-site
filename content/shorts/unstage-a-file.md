@@ -3,7 +3,7 @@ slug: "unstage-a-file"
 title: "Un-stage (rm) a file in Git"
 date: 2023-08-09T09:36:23+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'git', 'programming']
+tags: ['git', 'programming']
 keywords: ['git', 'staging']
 description: "If you accidentally stage a file, how do you un-stage it?"
 showToc: false

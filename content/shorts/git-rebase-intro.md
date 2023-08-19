@@ -3,7 +3,7 @@ slug: "git-rebase-intro"
 title: "Stop merging the main branch into your feature branch! Try rebasing"
 date: 2023-07-29T16:03:17+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'rebase']
 description: "Learn how to use git rebase to incorporate changes from the main branch, while keeping your feature branch clean"
 summary:

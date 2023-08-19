@@ -3,7 +3,7 @@ slug: "amend-the-last-commit-in-git"
 title: "How to add new changes to most recent git commit?"
 date: 2023-07-28T10:50:14+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'gitignore']
 description: Learn how to add new changes to the most recent git commit; and edit its commit message
 summary:

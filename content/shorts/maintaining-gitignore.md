@@ -3,7 +3,7 @@ slug: "maintaining-gitignore"
 title: "Use your gitignore efficiently - Learn supported patterns."
 date: 2023-08-07T09:39:47+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'gitignore']
 description: "Learn the patterns supported by gitignore to use it efficiently and avoid weird bugs"
 showToc: false

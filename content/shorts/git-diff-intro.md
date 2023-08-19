@@ -3,7 +3,7 @@ slug: "git-diff-intro"
 title: "View the changes you have made to your Git repository - Intro to git-diff"
 date: 2023-08-08T19:27:12+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'git', 'programming']
+tags: ['git', 'programming']
 keywords: ['git', 'git-diff']
 description: Learn how you can view the changes you have made to your Git repository.
 showToc: false

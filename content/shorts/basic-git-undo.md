@@ -3,7 +3,7 @@ slug: "basic-git-undo"
 title: "Un-stage and un-modify a file in Git - Part 2"
 date: 2023-08-12T08:42:44+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'git', 'programming']
+tags: ['git', 'programming']
 keywords: ['git', 'undo']
 description: 'Learn how to un-stage a file, or undo all modifications made to a file in Git'
 showToc: false

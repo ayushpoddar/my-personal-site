@@ -3,7 +3,7 @@ slug: "three-states-of-git"
 title: "The three states of Git - Looking into a typical Git workflow"
 date: 2023-08-03T11:28:23+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'working tree', 'staging area', 'git directory', 'workflow']
 description: "What does a typical workflow in Git project look like? Lets find out."
 summary:

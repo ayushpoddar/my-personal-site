@@ -3,7 +3,7 @@ slug: "locally-ignore-tracked-files"
 title: "How to ignore files in git? Without changing gitignore - Part II"
 date: 2023-07-27T10:28:44+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'gitignore']
 description: Learn how to untrack a tracked file in your local git repository
 summary:

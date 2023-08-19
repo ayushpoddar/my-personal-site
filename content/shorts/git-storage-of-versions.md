@@ -3,7 +3,7 @@ slug: "git-storage-of-versions"
 title: "How does Git store the version history of a project?"
 date: 2023-08-04T13:53:51+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'versioning', 'version control']
 description: "Does Git store the version history as a series of patches? Or is it different in its architecture?"
 showToc: false

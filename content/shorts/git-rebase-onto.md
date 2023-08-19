@@ -3,7 +3,7 @@ slug: "git-rebase-onto"
 title: "Advanced Git Rebasing: The Powerful --onto Flag"
 date: 2023-08-01T13:24:27+05:30
 author: 'Ayush Poddar'
-tags: ['shorts', 'programming', 'git']
+tags: ['programming', 'git']
 keywords: ['git', 'git-rebase', 'onto']
 description: "If you want to change the current base of your feature branch, the --onto flag should
 help you."
