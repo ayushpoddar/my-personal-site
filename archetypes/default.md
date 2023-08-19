@@ -6,7 +6,6 @@ author: 'Ayush Poddar'
 tags:
 keywords:
 description:
-summary:
 showReadingTime: true
 hideComments: true
 enableAnimation: false
