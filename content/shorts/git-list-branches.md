@@ -18,7 +18,7 @@ draft: false
 {{% shorts-intro-single %}}
 {{< /callout >}}
 
-As a developer you may already be aware of the `git branch` command which is used to list all the
+As a developer, you may already be aware of the `git branch` command which is used to list all the
 branches in your repository. The sample output of a `git branch` command looks like this:
 
 ```text
@@ -32,7 +32,7 @@ Here, the asterisk (`*`) sign represents the current branch, i.e., the branch th
 pointer]({{< relref "posts/git-branches-as-pointers.md" >}}) points to.
 
 In this [short](/shorts) post, I intend to list some of the most used command line flags that can be
-used with `git branch` command. These flags will help you:
+used with the `git branch` command. These flags will help you:
 1. View the last commit in each branch
 2. List only merged/non-merged branches
 
@@ -51,15 +51,15 @@ output of running `-v` flag looks like this:
 If you want to see only those branches which have been merged into the current branch, then you need
 to use the `--merged` command line flag. The output of running the command with the `--merged` flag
 is similar to the output of a simple `git branch` command. However, it filters out all the branches
-whose work are pending to be merged into the current branch.
+whose work is pending to be merged into the current branch.
 
 {{< callout type=note >}}
-You can delete the branches whose commits have been merged into the current branch, because the work
+You can delete the branches whose commits have been merged into the current branch because the work
 done in those branches is available in the current branch.
 {{< /callout >}}
 
 ## List only non-merged branches
-Similar to above, if you want to list only those branches who have some commits which are not part
+Similar to above, if you want to list only those branches that have some commits which are not part
 of the current branch, then you can use the `--no-merged` command line flag.
 
 ## References
