@@ -54,7 +54,7 @@ git push --set-upstream origin unicorn-feature
 ```
 
 This will create a new branch in our remote (origin) named `unicorn-feature`. However, the old
-branch still remains in remote. To verify, you can run `git branch --all` to list all the branches - including
+branch still remains in remote. To verify, you can run the `git branch --all` to list all the branches - including
 the ones in remote. The next step, then, is to delete the old branch (`good-feature`) from remote.
 
 ### Deleting the old branch from remote
@@ -72,7 +72,7 @@ git push origin --delete good-feature
 ```
 
 {{< callout type=warning >}}
-If the branch is being used by other collaboraters too, then be careful about renaming the branch in
+If the branch is being used by other collaborators too, then be careful about renaming the branch in
 remote. After the rename, they too should configure their local repositories to use the new branch.
 {{< /callout >}}
 
