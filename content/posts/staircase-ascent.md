@@ -105,5 +105,7 @@ def graphBFS(n):
     return count
 ```
 
+The two functions are the same except for the usage of stack in one and queue on another.
+
 ## Footnotes
 [^1]: Leetcode presents a variant of this problem where you can take only 1 or 2 steps at a time.
