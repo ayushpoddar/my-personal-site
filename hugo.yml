@@ -13,6 +13,24 @@ pygmentsUseClasses: true
 enableGitInfo: true
 enableEmoji: true
 
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+          - - \[
+            - \]
+          - - $$
+            - $$
+          inline:
+          - - \(
+            - \)
+        enable: true
+params:
+  math: false
+
+
 frontmatter:
   date:
     - date

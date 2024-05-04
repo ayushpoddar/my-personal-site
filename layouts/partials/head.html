@@ -169,3 +169,7 @@
 {{- end -}}
 
 {{ template "_internal/google_analytics.html" . }}
+
+{{ if .Param "math" }}
+  {{ partialCached "math.html" . }}
+{{ end }}
