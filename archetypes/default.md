@@ -13,4 +13,6 @@ hideComments: true
 enableAnimation: false
 mermaid: false
 draft: false
+params:
+    math: false
 ---
