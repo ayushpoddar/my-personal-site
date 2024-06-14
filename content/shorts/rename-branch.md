@@ -5,6 +5,7 @@ date: 2023-08-22T21:51:31+05:30
 author: 'Ayush Poddar'
 tags: ['git', 'programming']
 keywords: ['git', 'branch', 'rename']
+canonicalURL: 'https://builtin.com/articles/git-branch-rename'
 description: You might know how to rename a Git branch. But, do you know how to rename a remote branch too?
 showToc: false
 showReadingTime: true
